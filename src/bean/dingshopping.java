@@ -11,6 +11,7 @@ public class dingshopping {
 	private String cnum;//产品编号
 	private int sselect;//新添加的字段：可选状态sselect 2020/08/21 11：59 songlj
 	private int sstate;//商品状态  新添加的字段2020/08/24 13：41 songlj
+	private String ctype;//商品类型，新添加的字段2020/09/07 PM 15：53 songlj
 	private String danwei;//单位
 	private int number;//数量
 	private float price;//单价
@@ -128,6 +129,16 @@ public class dingshopping {
 	}
 	public void setSstate(int sstate) {
 		this.sstate = sstate;
+	}
+
+
+	public String getCtype() {
+		return ctype;
+	}
+
+
+	public void setCtype(String ctype) {
+		this.ctype = ctype;
 	}
 	
 }

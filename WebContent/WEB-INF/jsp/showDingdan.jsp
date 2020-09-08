@@ -23,6 +23,7 @@
 						<th>总金额</th>
 						<th>订单状态</th>
 						<th>交货日期</th>
+						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -36,12 +37,15 @@
 							<c:if test="${dingDan.state==0}">
 								<td>正在处理</td>
 							</c:if>
-							<c:if test="${dingDan.state!=0}">
-							<td>${dingDan.state}</td>
+							<c:if test="${dingDan.state==1}">
+								<td>已审核</td>
 							</c:if>
 							
 							<td>${dingDan.makedealDate}</td>
-								
+							<td>
+								<button class="btn btn-success btn-mini"
+								 type="button" onclick="javascript:window.location='ShowShoppingInfoServlet?action=comfirm&id=${dingDan.ddanNum}'">确认订单</button>&nbsp;
+							</td>	
 						</tr>
 					</c:forEach>
 				</tbody>

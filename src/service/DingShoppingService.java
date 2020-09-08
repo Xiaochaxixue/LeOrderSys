@@ -53,4 +53,18 @@ public class DingShoppingService {
 		return Total;
 	}
 
+	public dingshopping findRepeatDingShoppingInfo(String cnum, String uid) {
+		// TODO Auto-generated method stub
+		dingshopping dingShopping = new dingshopping();
+		DingShoppingDao dingShoppingDao = new DingShoppingDao();
+		dingShopping = dingShoppingDao.findRepeatDingShoppingInfo(cnum,uid);
+		return dingShopping;
+	}
+
+	public void resetDingShoppingInfo(String uid, String cnum, int number, Float total) {
+		// TODO Auto-generated method stub
+		DingShoppingDao dingShoppingDao = new DingShoppingDao();
+		dingShoppingDao.resetDingShoppingInfo(uid, cnum,number,total);
+	}
+
 }

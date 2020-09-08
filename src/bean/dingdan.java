@@ -6,7 +6,7 @@ public class dingdan {
 	private String dealDate;//下单时间
 	private float totalprice;//总金额
 	private String ps;//备注
-	private int state;//（订单） 状态 0表示正在处理
+	private int state;//（订单） 状态 0表示正在处理，订单0：表示
 	private String makedealDate;//交货日期
 	private String opa;//操作人
 	public String getDdanNum() {

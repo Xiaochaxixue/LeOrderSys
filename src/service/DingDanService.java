@@ -28,4 +28,18 @@ public class DingDanService {
 		dingDanDao.setNextStepByObj(dingDan);
 	}
 
+	public List<dingdan> findAllDingDanInfoByUid(String uid) {
+		// TODO Auto-generated method stub
+		List<dingdan> dingDans = new ArrayList<dingdan>();
+		DingDanDao dingDanDao = new DingDanDao();
+		dingDans = dingDanDao.findAllDingDanInfoByUid(uid);
+		return dingDans;
+	}
+
+	public void comfirmDingDanState(String ddanNum) {
+		// TODO Auto-generated method stub
+		DingDanDao dingDanDao = new DingDanDao();
+		dingDanDao.comfirmDingDanState(ddanNum);
+	}
+
 }

@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <script type="text/javascript">
-	
 	$(document).ready(function(){
 		$("#shoppingCart").addClass("active");
 	});
-	
 </script>
 <div class="data_list">
 		<div class="data_list_title">
@@ -30,11 +29,12 @@
 						<th>单价</th>
 						<th>商品状态</th>
 						<th>购买数量</th>
+						<th>商品总金额</th>
 						<!-- <td>操作</td> -->
 					</tr>
 				</thead>
 				<tbody>
-					<form name="myForm" class="form-search" method="post" action="ShowShoppingInfoServlet?action=buy">
+					<form name="myForm" class="form-search" method="post" action="ShowShoppingInfoServlet?action=buy" >
 					<!--items:表示要循环遍历的元素   var:代表当前集合中每一个元素     varStatus代表循环状态的变量名-->
 						<c:forEach items="${dingShoppings}"  var="dingShopping" varStatus="stat">
 							<tr>
@@ -43,7 +43,12 @@
 								</td>
 								<td><img class="img-rounded" src="${pageContext.request.contextPath}/upload/${dingShopping.picture}" alt="产品编号为：${dingShopping.cnum}" onerror="this.src='${pageContext.request.contextPath}/images/bg.jpg;this.onerror=null'" width="80px" height="80px"/></td>
 								
-								<td>${dingShopping.cnum}</td><!-- 产品编号 -->
+								<td>${dingShopping.ctype}
+								<font><strong>-</strong></font>${dingShopping.cnum}
+								<c:if test="${fn:contains(dingShopping.ctype,'MK')}">
+									<font><strong>-</strong></font>${dingShopping.pt}
+								</c:if>
+								</td><!-- 产品编号 -->
 								
 								<td>${dingShopping.gunum}</td><!-- 固件编号 -->
 								
@@ -67,14 +72,23 @@
 								</c:if>
 								<!--  -->
 								<td>${dingShopping.number}</td><!-- 数量 -->
+								<td>${dingShopping.total}</td><!-- 总金额 -->
 							</tr>
 						</c:forEach>
 						<span>
-							<button class="btn btn-success" type="submit" style="margin-right: 50px;">购买</button>
+							<c:if test="${not empty dingShoppings}">
+								<button class="btn btn-success" type="submit" style="margin-right: 50px;">购买</button>
+							</c:if>
+							<c:if test="${empty dingShoppings}">
+								<button class="btn btn-danger" type="button" style="margin-right: 50px;" disabled>购买</button>&nbsp;<font id="error" color="red"><strong>购物车空空如也！请去添加商品先！</strong></font>
+							</c:if>
 						</span>
 					</form>
 				</tbody>
 			</table>
+			<div align="center">
+				<font id="error" color="red">${error}</font>
+			</div>
 		</div>
 		<div align="center"><font color="red"></font></div>
 </div>
