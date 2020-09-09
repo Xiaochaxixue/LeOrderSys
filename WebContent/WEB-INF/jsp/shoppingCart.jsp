@@ -42,12 +42,14 @@
 									<input type="checkbox" name="Ischecked" value ="${dingShopping.cnum}">
 								</td>
 								<td><img class="img-rounded" src="${pageContext.request.contextPath}/upload/${dingShopping.picture}" alt="产品编号为：${dingShopping.cnum}" onerror="this.src='${pageContext.request.contextPath}/images/bg.jpg;this.onerror=null'" width="80px" height="80px"/></td>
-								
-								<td>${dingShopping.ctype}
-								<font><strong>-</strong></font>${dingShopping.cnum}
-								<c:if test="${fn:contains(dingShopping.ctype,'MK')}">
-									<font><strong>-</strong></font>${dingShopping.pt}
-								</c:if>
+								<td>
+									<a onclick="this.href='ShowShoppingInfoServlet?action=shoppingDetaileInfo&id=${dingShopping.cnum}'">
+										${dingShopping.ctype}
+										<font><strong>-</strong></font>${dingShopping.cnum}
+										<c:if test="${fn:contains(dingShopping.ctype,'MK')}">
+											<font><strong>-</strong></font>${dingShopping.pt}
+										</c:if>
+									</a>
 								</td><!-- 产品编号 -->
 								
 								<td>${dingShopping.gunum}</td><!-- 固件编号 -->

@@ -33,6 +33,9 @@ public class ShowCraftInfo {
 		 * 将工艺具体到哪个工艺
 		 * 排针工艺还是天线工艺
 		 */
+		if(pt.equals("")||pt==null){
+			return null;
+		}
 		if(pt.contains("P")||pt.contains("B")||pt.contains("C")||pt.contains("I")){
 			/**
 			 * 判断是否含有工艺技术

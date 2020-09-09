@@ -58,11 +58,13 @@
 								<input type="hidden" id="picture" name="picture" value="${dingShopping.picture}"/>
 								<!--  -->
 								<td>
-								${dingShopping.ctype}
-								<font><strong>-</strong></font>${dingShopping.cnum}
-								<c:if test="${fn:contains(dingShopping.ctype,'MK')}">
-									<font><strong>-</strong></font>${dingShopping.pt}
-								</c:if>
+									<a onclick="this.href='ShowShoppingInfoServlet?action=shoppingDetaileInfo&id=${dingShopping.cnum}'">
+										${dingShopping.ctype}
+										<font><strong>-</strong></font>${dingShopping.cnum}
+										<c:if test="${fn:contains(dingShopping.ctype,'MK')}">
+											<font><strong>-</strong></font>${dingShopping.pt}
+										</c:if>
+									</a>
 								</td><!-- 产品编号 -->
 								<%-- <input type="hidden" id="cnum" name="cnum" value="${dingShopping.cnum}"/> --%>
 								<input type="hidden" id="ctype" name="ctype" value="${dingShopping.ctype}"/>

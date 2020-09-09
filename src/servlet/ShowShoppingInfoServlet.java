@@ -5,7 +5,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,10 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.dingdan;
 import bean.dingshopping;
+import bean.shoppinginfo;
 import bean.user;
 import service.DingDanService;
 import service.DingShoppingService;
+import service.ShoppingInfoService;
 import utils.RandomUtil;
+import utils.ShowCraftInfo;
 
 /**
  * Servlet implementation class ShowShoppingInfoServlet
@@ -237,8 +242,35 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			DingDanService dingDanService = new DingDanService();
 			dingDanService.comfirmDingDanState(ddanNum, 2);
 			response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=showDingdan");
+		}else if(action.equals("shoppingDetaileInfo")){
+			/**
+			 * 显示商品信息的详情，并将工艺给转换成文字形式
+			 */
+			/*dingShoppingService*/
+			String cnum = id;
+			shoppinginfo shoppingInfo = new shoppinginfo();
+			ShoppingInfoService shoppingInfoService = new ShoppingInfoService();
+			shoppingInfo = shoppingInfoService.findShoppingInfoByCnum(cnum);
+			/**
+			 * 向utils包下的ShowCraftInfo类中传入工艺的值
+			 * 将工艺转换成可以理解的Map
+			 * ps:pt字符串可能为空也可能为null，数据库中存储的时候
+			 */
+			ShowCraftInfo showCraftInfo = new ShowCraftInfo();
+			
+			Map<String,String> craftInfoMap = new HashMap<String,String>();//将工艺存入到Map中
+			String pt;
+			pt=shoppingInfo.getPt();
+			if(pt!=null){
+				craftInfoMap = showCraftInfo.getDetailCraftInfoByPt(pt);//将pt传入，获得map
+			}else{
+				craftInfoMap=null;
+			}
+			//craftInfoMap = showCraftInfo.getDetailCraftInfoByPt(pt);//将pt传入，获得map
+			request.setAttribute("shoppingInfo", shoppingInfo);//将通过cnum得到的商品信息存入请求头里面
+			request.setAttribute("craftInfoMap", craftInfoMap);//将转换后的Map存入请求头里面
+			request.setAttribute("mainRight", "/WEB-INF/jsp/shoppingDetaileInfo.jsp");
+			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
 		}
-		
 	}
-
 }

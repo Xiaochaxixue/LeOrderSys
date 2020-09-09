@@ -40,7 +40,7 @@ public class DingDanManageServlet extends HttpServlet {
 		 * 填写备注等信息
 		 */
 		System.out.println("=========订单管理信息显示servlet=========");
-		
+		//request.getSession().removeAttribute("error");
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
 		//通过request.getParameter("id")方式获取的值都是String类型

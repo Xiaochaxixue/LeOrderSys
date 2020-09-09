@@ -3,6 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
+	/* toastr.options = {"closeButton": true,
+		positionClass:"toast-center-center"}; */
 	
 	$(document).ready(function(){
 		$('.form_date').datetimepicker({
@@ -16,11 +18,14 @@
 			forceParse: 0,/*就是你输入的可能不正规，但是它胡强制尽量解析成你规定的格式（format）  */
 			format: "yyyy-mm-dd", //时间格式  yyyy-mm-dd hh:ii:ss */
 		});
-		
 	});
 	
-	
-	
+	/* $(document).ready(function(){
+		if($("#error").text()!=null||$("#error").text()!=""||$("#error").text()!="undefined"){
+			toastr.error($("#error").text()); 
+		}
+	});
+	 */
 	$(document).ready(function(){
 		$("#dingdanManage").addClass("active");
 	});
@@ -47,7 +52,6 @@
 					</tr>
 				</thead>
 				<tbody>
-				
 					<!--items:表示要循环遍历的元素   var:代表当前集合中每一个元素     varStatus代表循环状态的变量名-->
 					<c:forEach items="${dingDans}"  var="dingDan" varStatus="stat">
 						<form name="myForm" method="post" action="DingDanManageServlet?action=operation">
@@ -86,19 +90,23 @@
 							</td><!-- 需要手工输入交货日期 -->
 							<td>
 								<c:if test="${dingDan.state==0}"><font color="red">待处理</font></c:if>
-							</td>
-							<td>
 								<c:if test="${dingDan.state!=0}">
 									${User.uid}
-									<input type="hidden" id="opa" name="uid" value="${User.uid}"/>
 								</c:if>
+								<input type="hidden" id="opa" name="uid" value="${User.uid}"/>
 							</td>
 							<%-- <td>${User.uid}
 								<input type="hidden" id="opa" name="uid" value="${User.uid}"/>
 							</td> --%>
 							<c:if test="${dingDan.state<4}">
-								<td>
+								<!-- <td>
 									<button class="btn btn-link" type="submit">设置下一步订单状态</button>&nbsp;
+								</td> -->
+								<td>
+									<c:if test="${dingDan.state==0}"><button class="btn btn-link" type="submit"><font color="red">请核对信息，设置交期等</font></button>&nbsp;</c:if>
+									<c:if test="${dingDan.state==1}"><button class="btn btn-link" type="button"><font color="green">请等候用户确认订单</font></button>&nbsp;</c:if>
+									<c:if test="${dingDan.state==2}"><button class="btn btn-link" type="submit"><font color="red">用户已付款</font></button>&nbsp;</c:if>
+									<c:if test="${dingDan.state==3}"><button class="btn btn-link" type="submit"><font color="red">标记订单已完成</font></button>&nbsp;</c:if>
 								</td>
 								<td>
 									<button class="btn btn-mini btn-danger" type="button" onclick="javascript:window.location='DingDanManageServlet?action=withdraw&id=${dingDan.ddanNum}'">驳回订单</button>&nbsp;
@@ -115,12 +123,11 @@
 						</tr>
 						</form>
 					</c:forEach>
-					
+					<div align="center">
+						<font id="error" color="red">${error}</font>
+					</div>
 				</tbody>
 			</table>
-			<div align="center">
-					<font id="error" color="red">${error}</font>
-				</div>
 		</div>
 		<div align="center"><font color="red"></font></div>
 </div>
