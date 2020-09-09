@@ -35,17 +35,29 @@
 							<td>${dingDan.dealDate}</td>
 							<td>${dingDan.totalprice}</td>
 							<c:if test="${dingDan.state==0}">
-								<td>正在处理</td>
+								<td><font color="green">正在受理</font></td>
 							</c:if>
 							<c:if test="${dingDan.state==1}">
-								<td>已审核</td>
+								<td><font color="green">审核已通过</font></td>
 							</c:if>
-							
-							<td>${dingDan.makedealDate}</td>
+							<c:if test="${dingDan.state==2}">
+								<td><font color="green">订单已确认</font></td>
+							</c:if>
+							<c:if test="${dingDan.state==3}">
+								<td><font color="green">已付款</font></td>
+							</c:if>
+							<c:if test="${dingDan.state!=0}">
+								<td>${dingDan.makedealDate}</td>
+							</c:if>
+							<c:if test="${dingDan.state==0}">
+								<td><font color="red">正在火速处理中<strong>...</strong></font></td>
+							</c:if>
 							<td>
-								<button class="btn btn-success btn-mini"
-								 type="button" onclick="javascript:window.location='ShowShoppingInfoServlet?action=comfirm&id=${dingDan.ddanNum}'">确认订单</button>&nbsp;
-							</td>	
+								<c:if test="${dingDan.state==1}">
+									<button class="btn btn-info btn-mini"
+									 type="button" onclick="javascript:window.location='ShowShoppingInfoServlet?action=comfirm'">确认订单</button>&nbsp;
+								</c:if>	
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

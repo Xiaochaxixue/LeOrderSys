@@ -36,10 +36,10 @@ public class DingDanService {
 		return dingDans;
 	}
 
-	public void comfirmDingDanState(String ddanNum) {
+	public void comfirmDingDanState(String ddanNum,int state) {
 		// TODO Auto-generated method stub
 		DingDanDao dingDanDao = new DingDanDao();
-		dingDanDao.comfirmDingDanState(ddanNum);
+		dingDanDao.setDingDanState(ddanNum, state);
 	}
 
 }

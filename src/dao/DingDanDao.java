@@ -152,17 +152,17 @@ public class DingDanDao {
 		return null;
 	}
 
-	public void comfirmDingDanState(String ddanNum) {
+	public void setDingDanState(String ddanNum,int state) {
 		// TODO Auto-generated method stub
 		Connection  connection = ConnectionFactory.getConnection();
 		PreparedStatement preparedStatement =null;
 		
 		try {
 			//② 准备SQL语句
-			String sql = "UPDATE dingdan SET sstate = ? WHERE ddanNum = ? ";
+			String sql = "UPDATE dingdan SET state = ? WHERE ddanNum = ? ";
 			//③ 获取集装箱或者说是车
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1,2);
+			preparedStatement.setInt(1,state);
 			preparedStatement.setString(2,ddanNum);
 			
 			preparedStatement.executeUpdate();//④执行SQL

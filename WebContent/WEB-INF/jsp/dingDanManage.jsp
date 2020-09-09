@@ -30,12 +30,7 @@
 		<div class="data_list_title">
 			订单管理
 		</div>
-			<!-- <form name="myForm" class="form-search" method="post" action="gujianInfoManageServlet?action=list&id=search">
-				<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='gujianInfoManageServlet?action=preAdd'">添加</button>
-				<span class="data_search">
-					<button type="submit" class="btn btn-info">搜索</button>
-				</span>
-			</form> -->
+			
 		<div>
 			<table class="table table-striped table-bordered table-hover datatable">
 				<thead>
@@ -75,11 +70,12 @@
 								<input type="text" id="ps" name="ps" value="${dingDan.ps}" style="margin-top:5px;height:30px;">
 							</td><!-- 添加备注，input -->
 							<td>
-								<c:if test="${dingDan.state==0}"><font color="red">待处理</font></c:if>
-								<c:if test="${dingDan.state==1}"><font color="green">已确认</font></c:if>
-								<c:if test="${dingDan.state==2}"><font color="green">正在生产</font></c:if>
-								<c:if test="${dingDan.state==3}"><font color="green">step4</font></c:if>
-								<c:if test="${dingDan.state==4}"><font color="green">step5</font></c:if>
+								<c:if test="${dingDan.state==0}"><font color="red">订单待处理</font></c:if>
+								<c:if test="${dingDan.state==1}"><font color="green">已审核</font></c:if>
+								<c:if test="${dingDan.state==2}"><font color="green">用户已确认</font></c:if>
+								<c:if test="${dingDan.state==3}"><font color="green">用户已付款</font></c:if>
+								<c:if test="${dingDan.state==4}"><font color="green">订单已完成</font></c:if>
+								<c:if test="${dingDan.state==99}"><font color="red">订单被驳回</font></c:if>
 								<input type="hidden" id="state" name="state" value="${dingDan.state}"/>
 							</td>
 							<td>${dingDan.makedealDate}
@@ -88,23 +84,32 @@
 								</c:if>
 								<input type="hidden" id="makedealDate" name="makedealDate" value="${dingDan.makedealDate}"/>
 							</td><!-- 需要手工输入交货日期 -->
-							<td>${User.uid}
-								<input type="hidden" id="opa" name="uid" value="${User.uid}"/>
+							<td>
+								<c:if test="${dingDan.state==0}"><font color="red">待处理</font></c:if>
 							</td>
+							<td>
+								<c:if test="${dingDan.state!=0}">
+									${User.uid}
+									<input type="hidden" id="opa" name="uid" value="${User.uid}"/>
+								</c:if>
+							</td>
+							<%-- <td>${User.uid}
+								<input type="hidden" id="opa" name="uid" value="${User.uid}"/>
+							</td> --%>
 							<c:if test="${dingDan.state<4}">
 								<td>
 									<button class="btn btn-link" type="submit">设置下一步订单状态</button>&nbsp;
 								</td>
 								<td>
-									<button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='DingDanManageServlet?action=view'">预览</button>&nbsp;
+									<button class="btn btn-mini btn-danger" type="button" onclick="javascript:window.location='DingDanManageServlet?action=withdraw&id=${dingDan.ddanNum}'">驳回订单</button>&nbsp;
 								</td>
 							</c:if>
 							<c:if test="${dingDan.state>=4}">
 								<td>
-									没有更多操作了&nbsp;
+									订单已经完成&nbsp;
 								</td>
 								<td>
-									预览
+									&nbsp;
 								</td>
 							</c:if>
 						</tr>

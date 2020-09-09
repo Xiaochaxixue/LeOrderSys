@@ -67,7 +67,7 @@
 									<input type="hidden" id="sstate" name="sstate" value="${dingShopping.sstate}"/>
 								</c:if>
 								<c:if test="${dingShopping.sstate==2}">
-									<td><font color="red">正在 生产</font></td><!-- 商品状态 -->
+									<td><font color="red">正在生产</font></td><!-- 商品状态 -->
 									<input type="hidden" id="price" name="price" value="${dingShopping.price}"/>
 								</c:if>
 								<!--  -->

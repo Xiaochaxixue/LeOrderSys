@@ -235,7 +235,8 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			 * 数据库：dingdan
 			 */
 			DingDanService dingDanService = new DingDanService();
-			dingDanService.comfirmDingDanState(ddanNum);
+			dingDanService.comfirmDingDanState(ddanNum, 2);
+			response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=showDingdan");
 		}
 		
 	}
