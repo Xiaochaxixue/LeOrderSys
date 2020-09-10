@@ -105,7 +105,7 @@
 								<td>
 									<c:if test="${dingDan.state==0}"><button class="btn btn-link" type="submit"><font color="red">请核对信息，设置交期等</font></button>&nbsp;</c:if>
 									<c:if test="${dingDan.state==1}"><button class="btn btn-link" type="button"><font color="green">请等候用户确认订单</font></button>&nbsp;</c:if>
-									<c:if test="${dingDan.state==2}"><button class="btn btn-link" type="submit"><font color="red">用户已付款</font></button>&nbsp;</c:if>
+									<c:if test="${dingDan.state==2}"><button class="btn btn-link" type="submit"><font color="red">标记用户已付款</font></button>&nbsp;</c:if>
 									<c:if test="${dingDan.state==3}"><button class="btn btn-link" type="submit"><font color="red">标记订单已完成</font></button>&nbsp;</c:if>
 								</td>
 								<td>

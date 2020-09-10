@@ -49,6 +49,7 @@ public class ShowCraftInfo {
 				String[] pinAndantenna =pt.split("-");
 				Pin = pinAndantenna[0];
 				Antenna = pinAndantenna[1];
+				System.out.println("经过split方法     Pin："+Pin+"      Antenna:"+Antenna);
 				handlePin(Pin);
 				handleAntenna(Antenna);
 			}else if(pt.contains("P")&&!(pt.contains("B")||pt.contains("C")||pt.contains("I"))){
@@ -92,17 +93,25 @@ public class ShowCraftInfo {
 		int pLocate;
 		pLocate = pin.indexOf("P");
 		pinNum = pin.substring(0,pLocate);
+		System.out.println("排针数量："+pinNum);
+		
 		craftInfoLists.put("pinNum",pinNum);
 		
 		int allLength;
 		allLength = pin.length();
-		pinSize = pin.substring(pLocate+1,allLength-1);
+		pinSize = pin.substring(pLocate+1,allLength-2);
+		System.out.println("排针大小："+pinSize);
+		
 		craftInfoLists.put("pinSize",pinSize);
 		
-		pinShape = ""+pin.charAt(allLength-1);
+		pinShape = ""+pin.charAt(allLength-2);
+		System.out.println("排针形状："+pinShape);
+		
 		craftInfoLists.put("pinShape",pinShape);
 		
-		pinWeld = ""+pin.charAt(allLength);
+		pinWeld = ""+pin.charAt(allLength-1);
+		System.out.println("焊接方式："+pinWeld);
+		
 		craftInfoLists.put("pinWeld",pinWeld);
 		
 		return;
