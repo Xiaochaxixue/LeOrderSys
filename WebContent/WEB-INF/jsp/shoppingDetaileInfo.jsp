@@ -17,7 +17,6 @@
 		<div class="data_list_title">
 				商品信息详情
 		</div>
-		<form action="clientManageServlet?action=save" method="post" onsubmit="return checkForm()">
 			<div class="data_form" >
 				<table align="center">
 					<tr>
@@ -68,6 +67,5 @@
 					<font id="error" color="red">${error}</font>
 				</div>
 			</div>
-		</form>
 </div>
 </html>

@@ -42,4 +42,12 @@ public class DingDanService {
 		dingDanDao.setDingDanState(ddanNum, state);
 	}
 
+	public dingdan findDingDanInfoByDdanNum(String ddanNum) {
+		// TODO Auto-generated method stub
+		dingdan dingDan = new dingdan();
+		DingDanDao dingDanDao = new DingDanDao();
+		dingDan = dingDanDao.findDingDanInfoByDdanNum(ddanNum);
+		return dingDan;
+	}
+
 }

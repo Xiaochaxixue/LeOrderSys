@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.dingdan;
+import bean.dingshopping;
 import bean.user;
 import service.DingDanService;
+import service.DingShoppingService;
 
 /**
  * Servlet implementation class DingDanManageServlet
@@ -103,6 +105,27 @@ public class DingDanManageServlet extends HttpServlet {
 			DingDanService dingDanService = new DingDanService();
 			dingDanService.setNextStepByObj(dingDan);
 			response.sendRedirect(getServletContext().getContextPath()+"/DingDanManageServlet?action=list");
+		}else if(action.equals("dingdandetail")){
+			/**
+			 * id为ddanNum
+			 * 显示订单详情的动作
+			 * 拿取关于这一订单的所有
+			 * 商品信息以及这一订单的本身相关信息
+			 */
+			String ddanNum = id;/*传入的订单编号，方便后续查找数据，商品信息列表以及订单本身的信息。*/
+			dingdan dingDan = new dingdan();//存入该订单本身信息。
+			List<dingshopping> dingShoppings = new ArrayList<dingshopping>();//存入所有的商品信息。
+			DingDanService dingDanService = new DingDanService();
+			DingShoppingService dingShoppingService = new DingShoppingService();
+			dingDan = dingDanService.findDingDanInfoByDdanNum(ddanNum);
+			dingShoppings = dingShoppingService.findAllDingShoppingInfoByDdanNum(ddanNum);
+			//dingShoppings = DingShoppingService
+			request.setAttribute("dingDan", dingDan);//将订单信息取出来并存入到请求头里面
+			request.setAttribute("dingShoppings", dingShoppings);//将订单编号为ddanNum的所有订单商品信息取出来并存入到请求头里面
+			
+			request.setAttribute("mainRight", "/WEB-INF/jsp/dingDanDetail.jsp");
+			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+			
 		}else{
 			response.sendRedirect(getServletContext().getContextPath()+"/DingDanManageServlet?action=list");
 		}

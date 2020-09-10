@@ -56,7 +56,7 @@
 					<c:forEach items="${dingDans}"  var="dingDan" varStatus="stat">
 						<form name="myForm" method="post" action="DingDanManageServlet?action=operation">
 						<tr>
-							<td>${dingDan.ddanNum}
+							<td><a onclick="this.href='DingDanManageServlet?action=dingdandetail&id=${dingDan.ddanNum}'">${dingDan.ddanNum}</a>
 								<input type="hidden" id="ddanNum" name="ddanNum" value="${dingDan.ddanNum}"/>
 							</td>
 							
@@ -93,15 +93,11 @@
 								<c:if test="${dingDan.state!=0}">
 									${User.uid}
 								</c:if>
-								<input type="hidden" id="opa" name="uid" value="${User.uid}"/>
+								<input type="hidden" id="opa" name="opa" value="${User.uid}"/>
 							</td>
-							<%-- <td>${User.uid}
-								<input type="hidden" id="opa" name="uid" value="${User.uid}"/>
-							</td> --%>
+							
 							<c:if test="${dingDan.state<4}">
-								<!-- <td>
-									<button class="btn btn-link" type="submit">设置下一步订单状态</button>&nbsp;
-								</td> -->
+								
 								<td>
 									<c:if test="${dingDan.state==0}"><button class="btn btn-link" type="submit"><font color="red">请核对信息，设置交期等</font></button>&nbsp;</c:if>
 									<c:if test="${dingDan.state==1}"><button class="btn btn-link" type="button"><font color="green">请等候用户确认订单</font></button>&nbsp;</c:if>

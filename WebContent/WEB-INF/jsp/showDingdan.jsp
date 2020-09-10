@@ -32,24 +32,24 @@
 							<td>${dingDan.uid}</td>
 							<td>${dingDan.dealDate}</td>
 							<td>${dingDan.totalprice}</td>
-							<c:if test="${dingDan.state==0}">
-								<td><font color="green">正在受理</font></td>
-							</c:if>
-							<c:if test="${dingDan.state==1}">
-								<td><font color="green">审核已通过</font></td>
-							</c:if>
-							<c:if test="${dingDan.state==2}">
-								<td><font color="green">订单已确认</font></td>
-							</c:if>
-							<c:if test="${dingDan.state==3}">
-								<td><font color="green">已付款</font></td>
-							</c:if>
-							<c:if test="${dingDan.state!=0}">
-								<td>${dingDan.makedealDate}</td>
-							</c:if>
-							<c:if test="${dingDan.state==0}">
-								<td><font color="red">正在火速处理中<strong>...</strong></font></td>
-							</c:if>
+							
+							<td>
+								<c:if test="${dingDan.state==0}"><font color="green">正在受理</font></c:if>
+							
+								<c:if test="${dingDan.state==1}"><font color="green">审核已通过</font></c:if>
+							
+								<c:if test="${dingDan.state==2}"><font color="green">订单已确认</font></c:if>
+							
+								<c:if test="${dingDan.state==3}"><font color="green">已付款</font></c:if>
+								
+								<c:if test="${dingDan.state==4}"><font color="green">订单已完成</font></c:if>
+							</td>
+							
+							<td>
+								<c:if test="${dingDan.state!=0}">${dingDan.makedealDate}</c:if>
+							
+								<c:if test="${dingDan.state==0}"><font color="red">正在火速处理中<strong>...</strong></font></c:if>
+							</td>
 							<td>
 								<c:if test="${dingDan.state==1}">
 									<button class="btn btn-info btn-mini"

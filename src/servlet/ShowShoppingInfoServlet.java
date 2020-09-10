@@ -156,8 +156,7 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			
 			response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=cartshow");
 			
-		}
-		else if(action.equals("cartshow")){
+		}else if(action.equals("cartshow")){
 			/**
 			 * 显示购物车中的信息
 			 * 从数据库中拿出信息，存入到请求头里面

@@ -430,5 +430,82 @@ public class DingShoppingDao {
 		}
 	}
 
+	public List<dingshopping> findAllDingShoppingInfoByDdanNum(String ddanNum) {
+		// TODO Auto-generated method stub
+		List<dingshopping> dingShoppings = new ArrayList<dingshopping>();
+		Connection  connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet  rs = null;
+		
+		try {
+			//② 准备SQL语句
+			//sql语句为多表查询sql语句
+			String sql = "SELECT * FROM dingshopping WHERE ddanNum=?";
+			
+			//③ 获取集装箱或者说是车
+			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			 
+			 preparedStatement.setString(1, ddanNum);
+			//④执行SQL,获取执行后的结果,查询的结果封装在ResultSet
+			rs = preparedStatement.executeQuery();
+			//如有数据，就进入循环体，封装该行数据
+			while (rs.next()) {
+				dingshopping dingShopping = new dingshopping();
+				/**
+				 * rs结果集的相关操作
+				 * 将rs结果集中的数据存入到dingShopping对象中
+				 * 将封装好的数据对象放入List集合中
+				 */
+				dingShopping.setCtype(rs.getString("ctype"));
+				
+				dingShopping.setPt(rs.getString("pt"));
+				
+				dingShopping.setDdanNum(rs.getString("ddanNum"));
+				
+				dingShopping.setUid(rs.getString("uid"));
+				
+				dingShopping.setGunum(rs.getString("gunum"));
+				
+				dingShopping.setCnum(rs.getString("cnum"));
+				/*System.out.println("dingShopping.setCnum:"+rs.getString("cnum"));*/
+				
+				dingShopping.setSstate(rs.getInt("sstate"));
+				/*System.out.println("dingShopping.setSstate:"+rs.getInt("sstate"));*/
+				dingShopping.setSselect(rs.getInt("sselect"));
+				
+				dingShopping.setDanwei(rs.getString("danwei"));
+				/*System.out.println("dingShopping.setDanwei:"+rs.getString("danwei"));*/
+				
+				int number = rs.getInt("number");
+				dingShopping.setNumber(number);
+				
+				float price = rs.getFloat("price");
+				dingShopping.setPrice(price);
+				/*System.out.println("dingShopping.setPrice:"+rs.getFloat("price"));*/
+				
+				dingShopping.setPicture(rs.getString("picture"));
+				/*System.out.println("dingShopping.setPicture:"+rs.getString("picture"));*/
+				
+				dingShopping.setRuDate(rs.getString("ruDate"));
+				/*System.out.println("dingShopping.setRuDate:"+rs.getString("ruDate"));*/
+				
+				dingShopping.setTotal(rs.getFloat("total"));
+				
+				/*System.out.println("============================");*/
+				dingShoppings.add(dingShopping);
+				System.out.println("dingShopping.toString():"+dingShopping.toString());
+			}
+			System.out.println("已经拿取了所有的商品信息数据，findAllDingShoppingInfoByDdanNum正常进入数据库");
+			return dingShoppings;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			//System.out.println("findAllClientInfo()1未正常进入数据库进行查询");
+			ConnectionFactory.close(connection, preparedStatement, rs);
+		}
+		System.out.println("findAllDingShoppingInfoByDdanNum()正常进入数据库,但是未从表中拿到数据return null!");
+		return null;
+	}
 
 }

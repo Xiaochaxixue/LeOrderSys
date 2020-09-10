@@ -67,6 +67,12 @@ public class DingShoppingService {
 		dingShoppingDao.resetDingShoppingInfo(uid, cnum,number,total);
 	}
 
-	
+	public List<dingshopping> findAllDingShoppingInfoByDdanNum(String ddanNum) {
+		// TODO Auto-generated method stub
+		List<dingshopping> dingShoppings = new ArrayList<dingshopping>();
+		DingShoppingDao dingShoppingDao = new DingShoppingDao();
+		dingShoppings = dingShoppingDao.findAllDingShoppingInfoByDdanNum(ddanNum);
+		return dingShoppings;
+	}
 
 }
