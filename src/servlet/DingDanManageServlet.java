@@ -86,7 +86,6 @@ public class DingDanManageServlet extends HttpServlet {
 			/*System.out.println("request.getParameter(totalprice):"+request.getParameter("totalprice"));*/
 			dingDan.setTotalprice(Float.parseFloat(request.getParameter("totalprice")));
 			
-			
 			dingDan.setPs(request.getParameter("ps"));
 			//备注
 			dingDan.setState(Integer.parseInt(request.getParameter("state"))+1);
@@ -126,6 +125,22 @@ public class DingDanManageServlet extends HttpServlet {
 			request.setAttribute("mainRight", "/WEB-INF/jsp/dingDanDetail.jsp");
 			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
 			
+		}else if(action.equals("modifyPt")){
+			/**
+			 * 修改排针天线工艺
+			 * 并给出提示信息
+			 * response
+			 * 订单的产品编号：cnum
+			 * 订单编号：ddanNum
+			 * 修改后的排针天线工艺：pt
+			 */
+			String cnum = request.getParameter("cnum");
+			String ddanNum = request.getParameter("ddanNum");
+			String pt = request.getParameter("pt");
+			
+			/**
+			 * 返回到当前请求页，并给出提示信息
+			 */
 		}else{
 			response.sendRedirect(getServletContext().getContextPath()+"/DingDanManageServlet?action=list");
 		}

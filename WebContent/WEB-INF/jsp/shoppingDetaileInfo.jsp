@@ -8,6 +8,7 @@
 <script type="text/javascript">
 		$(document).ready(function(){
 		$("#shoppingInfo").addClass("active");
+		$("#showshoppingInfo").addClass("active");
 	});
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

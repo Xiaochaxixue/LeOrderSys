@@ -82,7 +82,7 @@
 								<button class="btn btn-success" type="submit" style="margin-right: 50px;">购买</button>
 							</c:if>
 							<c:if test="${empty dingShoppings}">
-								<button class="btn btn-danger" type="button" style="margin-right: 50px;" disabled>购买</button>&nbsp;<font id="error" color="red"><strong>购物车空空如也！请去添加商品先！</strong></font>
+								<button class="btn btn-danger" type="button" style="margin-right: 50px;" disabled>购买</button>&nbsp;<font id="error" color="red" size="3"><strong>购物车空空如也！请去添加商品先！</strong></font>
 							</c:if>
 						</span>
 					</form>
