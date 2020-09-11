@@ -187,7 +187,8 @@ public class LoginFilter implements Filter {
 				requestUrI.startsWith(path+"/ModifyFileServlet")||
 				requestUrI.startsWith(path+"/shoppingInfo")||
 				requestUrI.startsWith(path+"/tianprice")||
-				requestUrI.startsWith(path+"/updatePai")
+				requestUrI.startsWith(path+"/updatePai")||
+				requestUrI.startsWith(path+"/ShowShoppingInfoServlet")
 				)){
 			/**
 			 * 表示当前用户为管理员用户，放行
