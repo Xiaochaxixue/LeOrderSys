@@ -44,19 +44,17 @@
 		<div align="center"><font color="red"></font></div>
 </div>
 <script type="text/javascript">
-	/* function tips(){ */
-		/* 修改排针天线工艺
-			给出提示信息。
-			toastr.error($("#error").text()); 
-		*/
-		/* toastr.options = {"closeButton": true,
-		positionClass:"toast-center-center"};
-		toastr.info("工艺即将修改"); //$("#error").text()
-		var pt = document.getElementById("pt").value;
-		var tip=comfirm("工艺将修改为："+pt);
-		return tip; */
-	/* } */
-	
+	$(document).ready(function(){
+		var tip="${sessionScope.tip}";
+		toastr.options = {"closeButton": true,
+				positionClass:"toast-center-center"};
+		if((tip!=null)&&(tip!="")){
+			toastr.info(tip);
+			<%
+			request.getSession().removeAttribute("tip");
+			%>
+		}
+	});
 	$(document).ready(function(){
 		$("#dingdanManage").addClass("active");
 	});

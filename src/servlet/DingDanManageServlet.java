@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.dingdan;
 import bean.dingshopping;
@@ -138,9 +139,29 @@ public class DingDanManageServlet extends HttpServlet {
 			String ddanNum = request.getParameter("ddanNum");
 			String pt = request.getParameter("pt");
 			
+			dingshopping dingShopping= new dingshopping();
+			
+			dingShopping.setCnum(cnum);
+			dingShopping.setDdanNum(ddanNum);
+			dingShopping.setPt(pt);
 			/**
-			 * 返回到当前请求页，并给出提示信息
+			 * 创建dingShopping对象，该对象只存储
+			 * 订单商品的产品编号、订单编号、以及工艺说明
+			 * 工艺说明为管理员在前端修改过后的工艺说明
+			 * 通过产品编号以及订单编号对工艺说明进行修改。
+			 * 其工艺说明修改service层方法为modifyPtByObj（dingShopping）
 			 */
+			DingShoppingService dingShoppingService = new DingShoppingService();
+			dingShoppingService.modifyPtByObj(dingShopping);
+			/**
+			 * 返回到订单详情页
+			 * 并给出提示信息
+			 * 将信息存入到session中
+			 * 在前端判断并给出提示信息
+			 */
+			HttpSession session = request.getSession();
+			session.setAttribute("tip", "成功修改工艺！");
+			response.sendRedirect(getServletContext().getContextPath()+"/DingDanManageServlet?action=dingdandetail&id="+ddanNum);
 		}else{
 			response.sendRedirect(getServletContext().getContextPath()+"/DingDanManageServlet?action=list");
 		}

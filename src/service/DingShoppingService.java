@@ -75,4 +75,10 @@ public class DingShoppingService {
 		return dingShoppings;
 	}
 
+	public void modifyPtByObj(dingshopping dingShopping) {
+		// TODO Auto-generated method stub
+		DingShoppingDao dingShoppingDao = new DingShoppingDao();
+		dingShoppingDao.modifyPtByObj(dingShopping);
+	}
+
 }

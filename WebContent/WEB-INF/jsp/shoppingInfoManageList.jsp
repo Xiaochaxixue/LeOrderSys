@@ -39,11 +39,14 @@
 					<!--items:表示要循环遍历的元素   var:代表当前集合中每一个元素     varStatus代表循环状态的变量名-->
 					<c:forEach items="${shoppingInfos}"  var="shoppingInfo" varStatus="stat">
 						<tr>
-							<td>${shoppingInfo.ctype}
-								<font><strong>-</strong></font>${shoppingInfo.cnum}
-								<c:if test="${fn:contains(shoppingInfo.ctype,'MK')}">
-									<font><strong>-</strong></font>${shoppingInfo.pt}
-								</c:if>
+							<td>
+							<a onclick="this.href='ShowShoppingInfoServlet?action=shoppingDetaileInfo&id=${shoppingInfo.cnum}'">
+								${shoppingInfo.ctype}
+									<font><strong>-</strong></font>${shoppingInfo.cnum}
+									<c:if test="${fn:contains(shoppingInfo.ctype,'MK')}">
+										<font><strong>-</strong></font>${shoppingInfo.pt}
+									</c:if>
+								</a>
 							</td>
 							<%-- <td>${shoppingInfo.ctype}</td> --%>
 							<c:if test="${shoppingInfo.ctype eq 'IC' }">

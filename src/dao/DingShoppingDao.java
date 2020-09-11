@@ -78,7 +78,6 @@ public class DingShoppingDao {
 		}
 		System.out.println("findAllSelectedDingShoppingByUid()正常进入数据库,但是未从表中拿到数据return null!");
 		return null;
-		
 	}
 
 	public List<dingshopping> findAllNoSelectDingShopping() {
@@ -92,7 +91,6 @@ public class DingShoppingDao {
 		Connection  connection = ConnectionFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet  rs = null;
-		
 		try {
 			//② 准备SQL语句
 			//sql语句为多表查询sql语句
@@ -104,7 +102,6 @@ public class DingShoppingDao {
 			/*preparedStatement.setString(1, );*/
 			//④执行SQL,获取执行后的结果,查询的结果封装在ResultSet
 			rs = preparedStatement.executeQuery();
-			
 			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
 			//如有数据，就进入循环体，封装该行数据
 			while (rs.next()) {
@@ -206,10 +203,8 @@ public class DingShoppingDao {
 			//② 准备SQL语句
 			//sql语句为多表查询sql语句
 			String sql = "SELECT * FROM dingshopping WHERE ddanNum IS NULL";
-			
 			//③ 获取集装箱或者说是车
 			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
-			 
 			//④执行SQL,获取执行后的结果,查询的结果封装在ResultSet
 			rs = preparedStatement.executeQuery();
 			//如有数据，就进入循环体，封装该行数据
@@ -254,8 +249,6 @@ public class DingShoppingDao {
 				/*System.out.println("dingShopping.setRuDate:"+rs.getString("ruDate"));*/
 				
 				dingShopping.setTotal(price*number);
-				
-				
 				
 				/*System.out.println("============================");*/
 				dingShoppings.add(dingShopping);
@@ -508,4 +501,27 @@ public class DingShoppingDao {
 		return null;
 	}
 
+	public void modifyPtByObj(dingshopping dingShopping) {
+		// TODO Auto-generated method stub
+		Connection  connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement =null;
+		
+		try {
+			//② 准备SQL语句
+			String sql = "UPDATE dingshopping SET pt = ? WHERE ddanNum=? AND cnum = ? ";
+			//③ 获取集装箱或者说是车
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, dingShopping.getPt());
+			preparedStatement.setString(2, dingShopping.getDdanNum());
+			preparedStatement.setString(3, dingShopping.getCnum());
+			
+			//④执行SQL
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			ConnectionFactory.close(connection, preparedStatement, null);
+		}
+	}
 }
