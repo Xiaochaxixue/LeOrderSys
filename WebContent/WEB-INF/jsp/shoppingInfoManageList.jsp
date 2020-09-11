@@ -48,41 +48,31 @@
 									</c:if>
 								</a>
 							</td>
-							<%-- <td>${shoppingInfo.ctype}</td> --%>
-							<c:if test="${shoppingInfo.ctype eq 'IC' }">
-							<td>芯片</td>
-							</c:if>
-							<c:if test="${shoppingInfo.ctype eq 'MK' }">
-							<td>MK模块</td>
-							</c:if>
-							<c:if test="${shoppingInfo.ctype eq 'MIMK' }">
-							<td>MIMK模块</td>
-							</c:if>
-							<c:if test="${shoppingInfo.ctype eq 'JDMK' }">
-							<td>JDMK模块</td>
-							</c:if>
-							<c:if test="${shoppingInfo.ctype eq 'PCBA' }">
-							<td>PCBA</td>
-							</c:if>
-							<c:if test="${shoppingInfo.ctype eq '02' }">
-							<td>成品</td>
-							</c:if>
+							
+							<td>
+								<c:if test="${shoppingInfo.ctype eq 'IC' }">芯片</c:if>
+								<c:if test="${shoppingInfo.ctype eq 'MK' }">MK模块</c:if>
+								<c:if test="${shoppingInfo.ctype eq 'MIMK' }">MIMK模块</c:if>
+								<c:if test="${shoppingInfo.ctype eq 'JDMK' }">JDMK模块</c:if>
+								<c:if test="${shoppingInfo.ctype eq 'PCBA' }">PCBA</c:if>
+								<c:if test="${shoppingInfo.ctype eq '02' }">成品</c:if>
+							</td>
+							
 							<td>${shoppingInfo.cname}</td>
 							<td>${shoppingInfo.guige}</td>
 							<td>${shoppingInfo.danwei}</td>
 							<td>${shoppingInfo.price}</td>
-							<c:if test="${shoppingInfo.sstate == 1 }">
-							<td>在售</td>
-							</c:if>
-							<c:if test="${shoppingInfo.sstate == 2 }">
-							<td>正在生产</td>
-							</c:if>
-							<c:if test="${shoppingInfo.sselect == 1 }">
-							<td>可选</td>
-							</c:if>
-							<c:if test="${shoppingInfo.sselect == 2 }">
-							<td>不可选</td>
-							</c:if>
+							
+							<td>
+								<c:if test="${shoppingInfo.sstate == 1 }">在售</c:if>
+								<c:if test="${shoppingInfo.sstate == 2 }">正在生产</c:if>
+							</td>
+							
+							<td>
+								<c:if test="${shoppingInfo.sselect == 1 }">可选</c:if>
+								<c:if test="${shoppingInfo.sselect == 2 }">不可选</c:if>
+							</td>
+							
 							<td>${shoppingInfo.picture}</td>
 							<td>
 								<button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='shoppingInfoManageServlet?action=preUpdate&id=${shoppingInfo.cnum}'">修改</button>&nbsp;

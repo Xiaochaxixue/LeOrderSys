@@ -166,6 +166,7 @@ public class DingDanDao {
 			preparedStatement.setString(2,ddanNum);
 			
 			preparedStatement.executeUpdate();//④执行SQL
+			System.out.println("订单已经确认");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
