@@ -40,8 +40,6 @@ public class UserDao {
 				//System.out.println("uid:"+User.getUid()+" paw:"+User.getPaw()+" type:"+User.getUid());
 				return User;
 			}
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

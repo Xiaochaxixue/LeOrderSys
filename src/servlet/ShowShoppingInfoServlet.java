@@ -240,6 +240,7 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			 */
 			DingDanService dingDanService = new DingDanService();
 			dingDanService.comfirmDingDanState(ddanNum, 2);
+			System.out.println("订单编号ddanNum："+ddanNum);
 			response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=showDingdan");
 		}else if(action.equals("shoppingDetaileInfo")){
 			/**
