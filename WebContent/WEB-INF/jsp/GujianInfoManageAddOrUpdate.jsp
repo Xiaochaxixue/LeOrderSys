@@ -56,7 +56,7 @@
 					</c:if>
 					<c:if test="${id == null }">
 						<td><font color="red">*</font>固件编号：</td>
-						<td><input type="text" id="gunum"  name="gunum" value="${guJian.gunum}"  style="margin-top:5px;height:30px;" readonly="true"/></td>
+						<td><input type="text" id="gunum"  name="gunum" value="${gunum}"  style="margin-top:5px;height:30px;" readonly="true"/></td>
 					</c:if>
 					</tr>
 					<tr>

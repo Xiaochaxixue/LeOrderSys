@@ -73,9 +73,7 @@ public class DingDanManageServlet extends HttpServlet {
 			/**
 			 * 对订单进行相关操作，设置订单相关信息
 			 */
-			/*System.out.println("request.getParameter(ps)");
-			System.out.println(request.getParameter("ps"));*/
-			request.getSession().removeAttribute("error");
+			//request.getSession().removeAttribute("error");
 			dingdan dingDan = new dingdan();
 			/*System.out.println("request.getParameter(ddanNum):"+request.getParameter("ddanNum"));*/
 			dingDan.setDdanNum(request.getParameter("ddanNum"));

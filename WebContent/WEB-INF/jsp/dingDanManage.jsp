@@ -20,12 +20,18 @@
 		});
 	});
 	
-	/* $(document).ready(function(){
-		if($("#error").text()!=null||$("#error").text()!=""||$("#error").text()!="undefined"){
-			toastr.error($("#error").text()); 
+	$(document).ready(function(){
+		var tip="${sessionScope.error}";
+		toastr.options = {"closeButton": true,
+				positionClass:"toast-center-center"};
+		if((tip!=null)&&(tip!="")){
+			toastr.info(tip);
+			<%
+			request.getSession().removeAttribute("error");
+			%>
 		}
 	});
-	 */
+	 
 	$(document).ready(function(){
 		$("#dingdanManage").addClass("active");
 	});

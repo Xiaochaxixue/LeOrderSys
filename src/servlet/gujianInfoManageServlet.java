@@ -84,7 +84,7 @@ public class gujianInfoManageServlet extends HttpServlet {
 			 * 将从数据库中拿到的数据（固件信息、商品信息、客户信息）存到请求头里面
 			 */
 			/*request.setAttribute("guJian", guJian);//将固件信息存入请求头里面*/
-			request.setAttribute("gunum", gunum);//将商品信息存入请求头里面
+			request.setAttribute("gunum", gunum);//将固件编号信息存入请求头里面
 			request.setAttribute("shoppingInfos", shoppingInfos);//将商品信息存入请求头里面
 			request.setAttribute("clients", clients);//将客户信息存入请求头里面
 			request.setAttribute("mainRight","/WEB-INF/jsp/GujianInfoManageAddOrUpdate.jsp");

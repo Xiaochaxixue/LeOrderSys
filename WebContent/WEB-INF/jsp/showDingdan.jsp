@@ -53,7 +53,7 @@
 							<td>
 								<c:if test="${dingDan.state==1}">
 									<button class="btn btn-info btn-mini"
-									 type="button" onclick="javascript:window.location='ShowShoppingInfoServlet?action=comfirm'">确认订单</button>&nbsp;
+									 type="button" onclick="javascript:window.location='ShowShoppingInfoServlet?action=comfirm&id=${dingDan.ddanNum}'">确认订单</button>&nbsp;
 								</c:if>	
 							</td>
 						</tr>

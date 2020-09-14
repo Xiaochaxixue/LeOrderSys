@@ -3,6 +3,18 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <script type="text/javascript">
+
+	$(document).ready(function(){
+		var tip="${sessionScope.error}";
+		toastr.options = {"closeButton": true,
+				positionClass:"toast-center-center"};
+		if((tip!=null)&&(tip!="")){
+			toastr.warning(tip);
+			<%
+			request.getSession().removeAttribute("error");
+			%>
+		}
+	});
 	$(document).ready(function(){
 		$("#shoppingCart").addClass("active");
 	});

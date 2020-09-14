@@ -1,4 +1,4 @@
-package servlet;
+ package servlet;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -210,11 +210,18 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 				dingDan.setState(0);//初始时，订单客户这边设置为0
 				dingDanService.addDingDanInfoByObj(dingDan);
 				response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=showDingdan");
+			}else {
+				/**
+				 * 当未勾选任何要购买的商品时，给出提示信息并且返回到开始页面状态
+				 */
+				request.getSession().setAttribute("error","请先勾选商品，再进行购买！");
+				response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=cartshow");
 			}
 		}else if(action.equals("showDingdan")){
 			List<dingdan> dingDans = new ArrayList<dingdan>();
 			DingDanService dingDanService = new DingDanService();
 			if(User.getType()==1){
+				
 				/**
 				 * 拿取当前用户的所有订单信息
 				 */
