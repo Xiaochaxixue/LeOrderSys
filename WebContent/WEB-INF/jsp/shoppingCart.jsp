@@ -21,7 +21,7 @@
 </script>
 <div class="data_list">
 		<div class="data_list_title">
-			商品信息管理
+			购物车管理
 		</div>
 			<!-- <th>可选状态</th> -->
 			<!-- 该div中对可选状态进行操作，点击可选，则显示出所有的商品信息，默认为不可选，显示当前用户当前的商品信息 -->

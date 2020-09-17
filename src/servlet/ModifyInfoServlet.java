@@ -89,7 +89,6 @@ public class ModifyInfoServlet extends HttpServlet {
 				UserService.updateUserInfoByObj(User);
 				response.sendRedirect(getServletContext().getContextPath()+"/LogOutServlet");
 			}
-			
 		}
 	}
 
