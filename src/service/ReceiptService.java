@@ -18,4 +18,18 @@ public class ReceiptService {
 		return receipts;
 	}
 
+	public receipt findReceiptIsExit(String uid, String title) {
+		// TODO Auto-generated method stub
+		receipt Receipt = new receipt();
+		ReceiptDao receiptDao = new ReceiptDao();
+		Receipt = receiptDao.findReceiptIsExit(uid,title);
+		return Receipt;
+	}
+
+	public void addReceiptInfoByObj(receipt Receipt) {
+		// TODO Auto-generated method stub
+		ReceiptDao receiptDao = new ReceiptDao();
+		receiptDao.addReceiptInfoByObj(Receipt);
+	}
+
 }

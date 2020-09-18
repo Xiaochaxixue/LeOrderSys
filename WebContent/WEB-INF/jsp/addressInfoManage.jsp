@@ -16,27 +16,31 @@
 	});
 	
 	$(document).ready(function(){
-		$("#receiptInfo").addClass("active");
+		$("#addressInfo").addClass("active");
 	});
 </script>
 <div class="data_list">
 		<div class="data_list_title">
-			发票管理
+			地址信息管理
 		</div>
-				<button class="btn btn-success" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal">新增发票</button><!-- onclick="javascript:window.location='receiptInfoServlet?action=add'" -->
+				<button class="btn btn-success" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal">新增地址</button><!-- onclick="javascript:window.location='receiptInfoServlet?action=add'" -->
 		<div>
 			<div class="data_form" >
-			<c:forEach items="${receipts}"  var="receipt" varStatus="stat">
-				<table class="table  table-bordered table-hover datatable"  style="width:500px" align="center">
+			<c:forEach items="${tb_addresss}"  var="tb_address" varStatus="stat">
+				<table class="table  table-bordered table-hover datatable"  style="width:1000px" align="center">
 				<!--items:表示要循环遍历的元素   var:代表当前集合中每一个元素     varStatus代表循环状态的变量名-->
 						<tr>
-							<td width="50%" style="text-align:center"><strong>发票抬头:</strong></td>
-							<td>${receipt.title}</td>
+							<td width="50%" style="text-align:center"><strong>收货人:</strong></td>
+							<td>${tb_address.acceptor}</td>
 						</tr>	
 						<tr>	
-							<td width="50%" style="text-align:center"><strong>企业纳税人识别号:</strong></td>
-							<td>${receipt.tax}</td>
+							<td width="50%" style="text-align:center"><strong>联系电话:</strong></td>
+							<td>${tb_address.tel}</td>
 						</tr>
+						<tr>
+							<td width="50%" style="text-align:center"><strong>收货地址:</strong></td>
+							<td>${tb_address.adress}</td>
+						</tr>	
 				</table>
 			</c:forEach>
 				<div align="center">
@@ -50,19 +54,21 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        	<form name="myform" action="receiptInfoServlet?action=add" method="post"><!--  onsubmit="return checkForm()"暂时不对其合法性进行验证 -->
+        	<form name="myform" action="Tb_addressServlet?action=add" method="post">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title">增加发票信息</h4>
-	                <p><font size="2" color="red">该功能目前只支持增加功能，暂时不支持客户自己修改，如要修改请联系管理员！</font></p>
+	                <h4 class="modal-title">增加地址信息</h4>
 	            </div>
 	            <div class="modal-body">
 	            
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<strong>发票抬头:</strong><input type="text" name="title" id="title" style="margin-top:5px;height:30px;"/>
+					<p>&nbsp;&nbsp;
+						<strong>收货人:</strong><input type="text" name="acceptor" id="acceptor" style="margin-top:5px;height:30px;"/>
 					</p>
 					<p>
-						<strong>企业纳税人识别号:</strong><input type="text" name="tax" id="tax" style="margin-top:5px;height:30px;"/>
+						<strong>联系电话:</strong><input type="text" name="tel" id="tel" style="margin-top:5px;height:30px;"/>
+					</p>
+					<p>
+						<strong>收货地址:</strong><input type="text" name="address" id="address" style="margin-top:5px;height:30px;"/>
 					</p>
 	            </div>
 	            <div class="modal-footer">

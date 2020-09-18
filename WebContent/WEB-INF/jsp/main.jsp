@@ -106,7 +106,7 @@
 						<li id="showDingdan"><a href="ShowShoppingInfoServlet?action=showDingdan"><i class="icon-chevron-right"></i>订单管理</a></li>
 						<li id="modifyInfo"><a href="ModifyInfoServlet?action=list"><i class="icon-chevron-right"></i>企业信息管理</a></li>
 						<li id="receiptInfo"><a href="receiptInfoServlet?action=list"><i class="icon-chevron-right"></i>发票管理</a></li>
-						<!-- <li id="modifyInfo"><a href="addressInfoServlet?action=address"><i class="icon-chevron-right"></i>地址信息管理</a></li> -->
+						<li id="addressInfo"><a href="Tb_addressServlet?action=list"><i class="icon-chevron-right"></i>地址信息管理</a></li>
 						<li id="logOut"><a href="LogOutServlet"><i class="icon-chevron-right"></i>退出系统</a></li>
 					</c:if>
 					<c:if test="${session_user.type == 2}">
