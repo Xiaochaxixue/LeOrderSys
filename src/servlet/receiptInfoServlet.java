@@ -46,6 +46,10 @@ public class receiptInfoServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		user  User = new user();
 		User = (user) request.getSession().getAttribute("session_user");
+		if(User==null){
+			response.sendRedirect("index.jsp");
+			return;
+		}
 		String uid = User.getUid();
 		/**
 		 * 从session中获取user对象，方便后续的使用，查找等。
@@ -119,8 +123,7 @@ public class receiptInfoServlet extends HttpServlet {
 			 * 防止多余的出口导致请求给出的响应为
 			 * 浏览器的空白页面，给用户的体验不好。
 			 */
-			request.setAttribute("mainRight", "/WEB-INF/jsp/blank.jsp");
-			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+			response.sendRedirect(getServletContext().getContextPath()+"/receiptInfoServlet?action=list");
 		}
 	}
 

@@ -37,6 +37,15 @@ public class ClientService {
 		ClientDao clientDao = new ClientDao();
 		clientDao.updateClientInfoByObj(Client);
 	}
+
+	public client findClientPictureIsExitByUid(String userName) {
+		// TODO Auto-generated method stub
+		client picture=null;
+		ClientDao clientDao = new ClientDao();
+		String uid = userName;
+		picture = clientDao.findClientPictureIsExitByUid(uid);
+		return picture;
+	}
 	
 
 }

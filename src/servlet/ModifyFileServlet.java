@@ -34,14 +34,12 @@ public class ModifyFileServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
 	/**
 	 * @see HttpServlet#service(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("=========修改文件servlet=========");
-		
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
 		//通过request.getParameter("id")方式获取的值都是String类型

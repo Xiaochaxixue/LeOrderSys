@@ -23,4 +23,10 @@ public class Tb_addressService {
 		Tb_address2 = tb_addressDao.findTb_addressIsExitByObj(Tb_address);
 		return Tb_address2;
 	}
+
+	public void addTb_addressServlet(tb_address tb_address) {
+		// TODO Auto-generated method stub
+		Tb_addressDao tb_addressDao = new Tb_addressDao();
+		tb_addressDao.addTb_addressServlet(tb_address);
+	}
 }

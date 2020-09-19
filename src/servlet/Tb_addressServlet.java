@@ -45,6 +45,10 @@ public class Tb_addressServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		user  User = new user();
 		User = (user) request.getSession().getAttribute("session_user");
+		if(User==null){
+			response.sendRedirect("index.jsp");
+			return;
+		}
 		String uid = User.getUid();
 		/**
 		 * 从session中获取user对象，方便后续的使用，查找等。
@@ -105,8 +109,22 @@ public class Tb_addressServlet extends HttpServlet {
 				 * 若已经存在则返回到地址信息
 				 * 管理页面
 				 */
-				
-			}
+				request.getSession().setAttribute("tip", "该地址信息已经存在，请重新添加！");
+				response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
+				return;
+			}/**
+			 * 如果通过前面两重判断，
+			 * 则对地址信息进行添加
+			 * 操作，将相应的信息存入
+			 */
+			tb_addressService.addTb_addressServlet(Tb_address);
+			response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
+		}else{
+			/**
+			 * 当没有其它action为出口时，则从这个入口
+			 * 出去，返回到地址管理展示界面
+			 */
+			response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
 		}
 	}
 

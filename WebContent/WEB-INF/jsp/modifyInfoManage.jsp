@@ -50,14 +50,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-
 <div class="data_list">
 		<div class="data_list_title">
-			修改个人信息
+			修改企业信息
 		</div>
 		<form action="ModifyInfoServlet?action=save&paw=${session_user.uid}" method="post" onsubmit="return checkForm()">
 			<div class="data_form" >
-				
 				<table align="center">
 					<tr>
 						<td><font color="red">*</font>用户名：</td>
@@ -88,17 +86,17 @@
 						<td><input type="text" id="phone"  name="phone" value="${client.phone}"  style="margin-top:5px;height:30px;" /></td>
 					</tr>
 					<tr>
-						<td><font color="red"></font>默认地址：</td>
+						<td><font color="red"></font>默认收货地址：</td>
 						<td><input type="text" id="address0"  name="address0" value="${client.address0}"  style="margin-top:5px;height:30px;" /></td>
 					</tr>
-					<tr>
+					<%-- <tr>
 						<td>收货地址2：</td>
 						<td><input type="text" id="address1"  name="address1" value="${client.address1}"  style="margin-top:5px;height:30px;" /></td>
 					</tr>
 					<tr>
 						<td>收货地址3：</td>
 						<td><input type="text" id="address2"  name="address2" value="${client.address2}"  style="margin-top:5px;height:30px;" /></td>
-					</tr>
+					</tr> --%>
 				</table>
 				<div align="center">
 					<input type="submit" class="btn btn-primary" value="保存"/>

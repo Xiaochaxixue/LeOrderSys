@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="${pageContext.request.contextPath}/bootstrap/js/bootstrapValidator.js"></script>
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -27,7 +28,7 @@
 		<div>
 			<div class="data_form" >
 			<c:forEach items="${tb_addresss}"  var="tb_address" varStatus="stat">
-				<table class="table  table-bordered table-hover datatable"  style="width:1000px" align="center">
+				<table class="table  table-bordered table-hover datatable"  style="width:700px" align="center">
 				<!--items:表示要循环遍历的元素   var:代表当前集合中每一个元素     varStatus代表循环状态的变量名-->
 						<tr>
 							<td width="50%" style="text-align:center"><strong>收货人:</strong></td>
@@ -39,13 +40,13 @@
 						</tr>
 						<tr>
 							<td width="50%" style="text-align:center"><strong>收货地址:</strong></td>
-							<td>${tb_address.adress}</td>
+							<td>${tb_address.address}</td>
 						</tr>	
 				</table>
 			</c:forEach>
-				<div align="center">
+				<%-- <div align="center">
 					<font id="error" color="red">${error}</font>
-				</div>
+				</div> --%>
 			</div>
 	</div>
 </div>
@@ -57,7 +58,7 @@
         	<form name="myform" action="Tb_addressServlet?action=add" method="post">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title">增加地址信息</h4>
+	                <h4 class="modal-title">增加地址信息</h4><font id="error" color="red">${error}</font>
 	            </div>
 	            <div class="modal-body">
 	            

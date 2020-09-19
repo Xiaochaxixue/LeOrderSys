@@ -34,6 +34,8 @@ import service.UserService;
 													"/shoppingInfoManageServlet",
 													"/ShowShoppingInfoServlet",
 													"/tianpriceManageServlet",
+													"/receiptInfoServlet",
+													"/Tb_addressServlet",
 													"/updatePaiServlet"})
 public class LoginFilter implements Filter {
 
@@ -134,7 +136,7 @@ public class LoginFilter implements Filter {
 		 * 动态获取项目名
 		 */
 		String path = httpServletRequest.getContextPath();
-		System.out.println("path:"+path);
+		//System.out.println("path:"+path);
 		if((roleId.equals(0))&&(
 				requestUrI.startsWith(path+"/indexServlet")||
 				requestUrI.startsWith(path+"/LogOutServlet")||
@@ -162,10 +164,12 @@ public class LoginFilter implements Filter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if((roleId.equals(1))&&(
+		}else if((roleId.equals(1))&&(//receiptInfoServlet,Tb_addressServlet
 				requestUrI.startsWith(path+"/indexServlet")||
 				requestUrI.startsWith(path+"/ShowShoppingInfoServlet")||
 				requestUrI.startsWith(path+"/ModifyInfoServlet")||
+				requestUrI.startsWith(path+"/receiptInfoServlet")||
+				requestUrI.startsWith(path+"/Tb_addressServlet")||
 				requestUrI.startsWith(path+"/LogOutServlet")
 				)){
 			httpServletRequest.getSession().setAttribute("session_user", user);

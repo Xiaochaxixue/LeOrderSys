@@ -10,9 +10,18 @@ public class client {
 	private String contact;//联系人
 	private String phone;//联系方式
 	private String address0;//收货地址1（默认地址）
-	private String address1;//收货地址2
-	private String address2;//收货地址3
+	private String address1;//收货地址2  需求发生改变，该字段暂时不用
+	private String address2;//收货地址3  需求发生改变，该字段暂时不用
 	//private Date date;
+	private String picture;//用户的营业执照
+	
+	
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 	public String getUid() {
 		return uid;
 	}
