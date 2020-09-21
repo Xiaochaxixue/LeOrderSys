@@ -57,7 +57,6 @@
 								<c:if test="${shoppingInfo.ctype eq 'PCBA' }">PCBA</c:if>
 								<c:if test="${shoppingInfo.ctype eq '02' }">成品</c:if>
 							</td>
-							
 							<td>${shoppingInfo.cname}</td>
 							<td>${shoppingInfo.guige}</td>
 							<td>${shoppingInfo.danwei}</td>

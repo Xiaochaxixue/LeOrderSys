@@ -63,6 +63,7 @@
 						<td><font color="red">*</font>用户名：</td>
 						<td>
 							<select id="uid" name="uid">
+								<option value="" style="margin-top:5px;height:30px;"></option>
 								<c:forEach items="${clients}" var="client">
 									<c:if test="${guJian.uid==client.uid }">
 										<option value="${guJian.uid}" selected="selected" style="margin-top:5px;height:30px;">${guJian.uid}</option>
@@ -76,7 +77,7 @@
 						<%-- <td><input type="text" id="uid"  name="uid" value="${guJian.uid}"  style="margin-top:5px;height:30px;" /></td> --%>
 					</tr>
 					<tr>
-						<td><font color="red">*</font>产品编号：</td>
+						<td><font color="red">*</font>程序编号：</td>
 						<td>
 							<select id="cnum" name="cnum">
 								<c:forEach items="${shoppingInfos}" var="shoppingInfo">

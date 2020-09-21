@@ -42,6 +42,21 @@
 		return true;
 	}
 	$(document).ready(function(){
+		var tip="${sessionScope.tip}";
+		toastr.options = {"closeButton": true,
+				positionClass:"toast-center-center"};
+		if((tip!=null)&&(tip!="")){
+			if(tip.indexOf("不成功")!=-1){
+				toastr.error(tip);
+			}else{
+				toastr.info(tip);
+			}
+			<%
+			request.getSession().removeAttribute("tip");
+			%>
+		}
+	});
+	$(document).ready(function(){
 		$("#modifyInfo").addClass("active");
 	});	
 </script>
@@ -54,6 +69,7 @@
 		<div class="data_list_title">
 			修改企业信息
 		</div>
+		<button class="btn btn-success" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal">上传营业执照扫描件</button>
 		<form action="ModifyInfoServlet?action=save&paw=${session_user.uid}" method="post" onsubmit="return checkForm()">
 			<div class="data_form" >
 				<table align="center">
@@ -107,5 +123,31 @@
 				</div>
 			</div>
 		</form>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		        	<form name="myform" action="ModifyFileServlet?action=companyLicese&id=${session_user.uid}" method="post" ENCTYPE="multipart/form-data">
+			            <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			                <h4 class="modal-title">上传企业营业执照扫描件</h4>
+			                <p>
+				                <font size="2" color="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				                		请上传贵公司具有法律效力的营业执照扫描件！管理员会在5个工作日内审核完成该证件的有效性。
+				                </font>
+			                </p>
+			            </div>
+			            <div class="modal-body">
+							<p>&nbsp;&nbsp;
+								<strong>请选择相应的文件：</strong><input type="file" name="picture" id="picture" value="请选择文件..." style="margin-top:5px;height:30px;"/>
+							</p>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			                <button type="submit" class="btn btn-primary">提交</button>
+			            </div>
+		            </form>
+		        </div>
+		    </div>
+		</div>
 </div>
 </html>

@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("userName:"+userName+"  password:"+password+"   remember:"+remember);
 		
 		UserService userService = new UserService();
-		ClientService clientService = new ClientService();
+		//ClientService clientService = new ClientService();
 		//去查询用户输入的登录名和密码是否正确
 		user  User = userService.findByuserNameAndPass(userName,password);
 		/*System.out.println("user:"+User.getUid());*/

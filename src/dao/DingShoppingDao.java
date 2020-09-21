@@ -26,7 +26,7 @@ public class DingShoppingDao {
 		try {
 			//② 准备SQL语句
 			//sql语句为多表查询sql语句
-			String sql = "SELECT gunum,s.cnum,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND g.uid= ? ";
+			String sql = "SELECT gunum,s.cnum,s.cname,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND g.uid= ? ";
 			
 			//③ 获取集装箱或者说是车
 			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -54,6 +54,8 @@ public class DingShoppingDao {
 				dingShopping.setGunum(rs.getString("gunum"));
 				
 				dingShopping.setCnum(rs.getString("cnum"));
+				
+				dingShopping.setCname(rs.getString("cname"));
 				
 				dingShopping.setRuDate(rs.getString("ruDate"));
 				
@@ -94,8 +96,9 @@ public class DingShoppingDao {
 		try {
 			//② 准备SQL语句
 			//sql语句为多表查询sql语句
-			String sql = "SELECT cnum,ruDate,danwei,price,picture,sstate,ctype,pt FROM shoppinginfo WHERE sselect=1 ";
-			
+			//String sql = "SELECT cnum,ruDate,danwei,price,picture,sstate,ctype,pt FROM shoppinginfo WHERE sselect=1 ";
+			/*"SELECT gunum,s.cnum,s.cname,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND g.uid= ? "*/
+			String sql = "SELECT gunum,s.cnum,s.cname,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND sselect=1 ";
 			//③ 获取集装箱或者说是车
 			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
 			//索引从1开始
@@ -113,6 +116,10 @@ public class DingShoppingDao {
 				 */
 				/*dingShopping.setGunum(rs.getString("gunum"));
 				System.out.println("dingShopping.setGunum:"+rs.getString("gunum"));*/
+				dingShopping.setGunum(rs.getString("gunum"));
+				dingShopping.setCname(rs.getString("cname"));
+				System.out.println("gunum#cname:"+rs.getString("gunum")+"#"+rs.getString("cname"));
+				
 				dingShopping.setCtype(rs.getString("ctype"));
 				dingShopping.setPt(rs.getString("pt"));
 				System.out.println("ctype#pt:"+rs.getString("ctype")+"#"+rs.getString("pt"));
@@ -215,6 +222,9 @@ public class DingShoppingDao {
 				 * 将rs结果集中的数据存入到dingShopping对象中
 				 * 将封装好的数据对象放入List集合中
 				 */
+				//dingShopping.setGunum(rs.getString("gunum"));
+				dingShopping.setCname(rs.getString("cname"));
+				
 				dingShopping.setCtype(rs.getString("ctype"));
 				dingShopping.setPt(rs.getString("pt"));
 				
@@ -264,7 +274,6 @@ public class DingShoppingDao {
 		}
 		System.out.println("findAllDingShoppingInfo()正常进入数据库,但是未从表中拿到数据return null!");
 		return null;
-		
 	}
 
 	public void setDdanNumByCnum(String ddanNum,String cnum) {
@@ -449,6 +458,9 @@ public class DingShoppingDao {
 				 * 将rs结果集中的数据存入到dingShopping对象中
 				 * 将封装好的数据对象放入List集合中
 				 */
+				//dingShopping.setGunum(rs.getString("gunum"));
+				dingShopping.setCname(rs.getString("cname"));
+				
 				dingShopping.setCtype(rs.getString("ctype"));
 				
 				dingShopping.setPt(rs.getString("pt"));

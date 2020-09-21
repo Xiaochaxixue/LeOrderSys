@@ -9,6 +9,9 @@ public class dingshopping {
 	private String uid;//新添加的字段：用户id 2020/08/21 11：59 songlj
 	private String gunum;//固件编号
 	private String cnum;//产品编号
+	
+	private String cname;//产品名称 新添加字段：产品名称  2020/09/21 16：04PM songlj
+	
 	private int sselect;//新添加的字段：可选状态sselect 2020/08/21 11：59 songlj
 	private int sstate;//商品状态  新添加的字段2020/08/24 13：41 songlj
 	private String ctype;//商品类型，新添加的字段2020/09/07 PM 15：53 songlj
@@ -139,6 +142,16 @@ public class dingshopping {
 
 	public void setCtype(String ctype) {
 		this.ctype = ctype;
+	}
+
+
+	public String getCname() {
+		return cname;
+	}
+
+
+	public void setCname(String cname) {
+		this.cname = cname;
 	}
 	
 }

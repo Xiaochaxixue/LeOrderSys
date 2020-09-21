@@ -16,6 +16,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import service.ClientService;
 import service.GujianService;
 import service.ShoppingInfoService;
 import utils.RandomUtil;
@@ -157,7 +158,72 @@ public class ModifyFileServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
+		}else if(action.equals("companyLicese")){
+			System.out.println("companyLicese... id: "+id);
+			String uid = id;//用户的uid client中的uid
+			String updir = "C:\\upload";
+			//判断提交过来的表单是否为文件上传表单。
+			String fileNewName ="";
+			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+			if(isMultipart){
+				//开始构造文件上传处理对象
+				FileItemFactory factory = new DiskFileItemFactory();
+				ServletFileUpload upload = new ServletFileUpload(factory);
+				Iterator items;
+				try {
+					//从表单中提取文件内容
+					items = upload.parseRequest(request).iterator();
+					while(items.hasNext()){
+						FileItem item = (FileItem)items.next();
+						if(!item.isFormField()){
+							//取出上传文件的文件名称
+							String name = item.getName();
+							String type;
+							type = name.indexOf(".")!=-1 ? name.substring(name.lastIndexOf(".")+1,name.length()) : null;
+							if(type==null){
+								/**
+								 * 判断是否文件合法，不合法则直接return；
+								 */
+								request.getSession().setAttribute("tip", "上传证件不成功，请稍后再次上传，谢谢您的配合！！！");
+								request.setAttribute("mainRight", "/WEB-INF/jsp/modifyInfoManage.jsp");
+								request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+								return;
+							}
+							fileNewName =uid+"_"+RandomUtil.getOrderIdByTime()+"_"+name;
+							String path = updir+File.separatorChar+fileNewName;
+							//将文件存储到服务器中
+							File uploadFile=new File(path);
+							item.write(uploadFile);
+						}
+					}
+					/**
+					 * 将相应的数据存入到client中，存入到
+					 *client中的picture数据项。
+					 * 存入数据库完毕后，进行页面跳转
+					 * 跳转到企业信息展示页面， 并给出
+					 * 提示信息
+					 */
+					//fileNewName
+					String piture = fileNewName;
+					ClientService clientService = new ClientService();
+					clientService.setPictureByUidAndUid(piture,uid);
+					request.getSession().setAttribute("tip", "成功上传相关证件！！！");
+					request.setAttribute("mainRight", "/WEB-INF/jsp/modifyInfoManage.jsp");
+					request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+				} catch (FileUploadException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					request.getSession().setAttribute("tip", "上传证件不成功，请稍后再次上传，谢谢您的配合！！！");
+					request.setAttribute("mainRight", "/WEB-INF/jsp/modifyInfoManage.jsp");
+					request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					request.getSession().setAttribute("tip", "上传证件不成功，请稍后再次上传，谢谢您的配合！！！");
+					request.setAttribute("mainRight", "/WEB-INF/jsp/modifyInfoManage.jsp");
+					request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+					e.printStackTrace();
+				}
+			}
 		}
 	}
-
 }

@@ -202,5 +202,31 @@ public class ClientDao {
 		System.out.println("findClientPictureIsExitByUid()正常进入数据库，但未拿到相应的数据，返回值为null");
 		return null;
 	}
+
+	public void setPictureByUidAndUid(String piture, String uid) {
+		// TODO Auto-generated method stub
+		Connection  connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement =null;
+		/**
+		 * 将用户的营业执照扫描件存入数据库
+		 */
+		try {
+			//② 准备SQL语句
+			String sql = "UPDATE client SET picture = ? WHERE uid = ?";
+			//③ 获取集装箱或者说是车
+			 preparedStatement = connection.prepareStatement(sql);
+			//索引从1开始
+			preparedStatement.setString(1,piture);
+			preparedStatement.setString(2,uid);
+			//④执行SQL
+			preparedStatement.executeUpdate();
+			System.out.println("==========数据库setPictureByUidAndUid()===========");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			ConnectionFactory.close(connection, preparedStatement, null);
+		}
+	}
 	
 }

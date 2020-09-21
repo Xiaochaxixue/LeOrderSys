@@ -15,10 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.client;
 import bean.dingdan;
 import bean.dingshopping;
 import bean.shoppinginfo;
 import bean.user;
+import service.ClientService;
 import service.DingDanService;
 import service.DingShoppingService;
 import service.ShoppingInfoService;
@@ -47,6 +49,7 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("=========商品信息显示servlet=========");
 		
+		
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
 		//通过request.getParameter("id")方式获取的值都是String类型
@@ -60,11 +63,33 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 		List<dingshopping> dingShoppings = new ArrayList<dingshopping>();
 		DingShoppingService dingShoppingService = new DingShoppingService();
 		/**
+		 * 查看该用户是否上传该企业的营业
+		 * 执照扫描件，如果未上传该公司的
+		 * 企业营业执照扫描件，则跳转到相
+		 * 应的页面提示用户上传该执照扫描
+		 * 件
+		 */
+		System.out.println("=========查询是否上传了执照=========");
+		ClientService clientService = new ClientService();
+		client Client = new client();
+		Client = clientService.findClientPictureIsExitByUid(uid);
+		if(User.getType()==1&&(Client==null||Client.getPicture()==null||Client.getPicture().isEmpty())){
+			/**
+			 * 表明该用户未上传营业执照
+			 * 则跳转到上传执照页面，提示上传
+			 * 执照扫描件。
+			 * 即跳转到企业信息管理界面进行提示
+			 */
+			request.getSession().setAttribute("tip", "亲，您还未上传相关具有法律效力的营业执照等相关信息，请先完善该信息。谢谢您的配合！");
+			request.setAttribute("mainRight", "/WEB-INF/jsp/modifyInfoManage.jsp");
+			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+			return;
+		}
+		/**
 		 * dingShoppingService.findAllSelectedDingShoppingByUid(uid)
 		 * 该方法表示查询得到所有的不可选的商品信息，并将信息存入到dingShoppings中的List
 		 * 集合中，便于前端展示
 		 */
-		
 		if(action.equals("list")){
 			/**
 			 * 将拿到的信息list存入到请求头里面
@@ -107,6 +132,8 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			dingShopping.setPicture(request.getParameter("picture"));
 			//得到cnum参数，产品编号
 			dingShopping.setCnum(request.getParameter("cnum"));
+			
+			dingShopping.setCname(request.getParameter("cname"));//新添加字段，产品编号
 			
 			dingShopping.setCtype(request.getParameter("ctype"));
 			dingShopping.setPt(request.getParameter("pt"));

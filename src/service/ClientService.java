@@ -40,12 +40,17 @@ public class ClientService {
 
 	public client findClientPictureIsExitByUid(String userName) {
 		// TODO Auto-generated method stub
-		client picture=null;
+		client Client=new client();
 		ClientDao clientDao = new ClientDao();
 		String uid = userName;
-		picture = clientDao.findClientPictureIsExitByUid(uid);
-		return picture;
+		Client = clientDao.findClientPictureIsExitByUid(uid);
+		return Client;
+	}
+
+	public void setPictureByUidAndUid(String piture, String uid) {
+		// TODO Auto-generated method stub
+		ClientDao clientDao = new ClientDao();
+		clientDao.setPictureByUidAndUid(piture,uid);
 	}
 	
-
 }

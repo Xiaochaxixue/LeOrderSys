@@ -168,6 +168,7 @@ public class LoginFilter implements Filter {
 				requestUrI.startsWith(path+"/indexServlet")||
 				requestUrI.startsWith(path+"/ShowShoppingInfoServlet")||
 				requestUrI.startsWith(path+"/ModifyInfoServlet")||
+				requestUrI.startsWith(path+"/ModifyFileServlet")||//添加用户上传企业执照扫描件，然后给用户开启权限
 				requestUrI.startsWith(path+"/receiptInfoServlet")||
 				requestUrI.startsWith(path+"/Tb_addressServlet")||
 				requestUrI.startsWith(path+"/LogOutServlet")
