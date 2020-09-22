@@ -13,7 +13,7 @@ public class client {
 	private String address1;//收货地址2  需求发生改变，该字段暂时不用
 	private String address2;//收货地址3  需求发生改变，该字段暂时不用
 	//private Date date;
-	private String picture;//用户的营业执照
+	private String picture;//用户的营业执照 新增字段，存储用户的营业执照扫描件。
 	
 	
 	public String getPicture() {

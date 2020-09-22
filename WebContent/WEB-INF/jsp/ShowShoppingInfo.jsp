@@ -35,7 +35,6 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!--items:表示要循环遍历的元素   var:代表当前集合中每一个元素     varStatus代表循环状态的变量名-->
 					<c:forEach items="${dingShoppings}"  var="dingShopping" varStatus="stat">
 						<form class="form-search" method="post" action="ShowShoppingInfoServlet?action=add" onsubmit="return checkForm()">
 						<tr>
@@ -58,8 +57,8 @@
 								
 								<!-- 固件编号展示 -->
 								<td>
+									${dingShopping.gunum}
 									<c:if test="${flag==null}">
-										${dingShopping.gunum}
 										<input type="hidden" id="gunum" name="gunum" value="${dingShopping.gunum}"/>
 									</c:if>
 									<c:if test="${flag!=null}">

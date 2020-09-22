@@ -10,7 +10,6 @@
 		<div class="data_list_title">
 			用户订单
 		</div>
-			
 		<div>
 			<table class="table table-striped table-bordered table-hover datatable">
 				<thead>
@@ -32,7 +31,6 @@
 							<td>${dingDan.uid}</td>
 							<td>${dingDan.dealDate}</td>
 							<td>${dingDan.totalprice}</td>
-							
 							<td>
 								<c:if test="${dingDan.state==0}"><font color="green">正在受理</font></c:if>
 							
