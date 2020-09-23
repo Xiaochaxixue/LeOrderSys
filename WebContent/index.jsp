@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh">
 <head>
@@ -11,16 +12,30 @@
 <script type="text/javascript">
 //top表示最顶级的窗口，也就是最外层的窗口。self指代当前窗口对象
 
-if(window.location != parent.window.location){
-	   //将当前页面作为最顶级页面
-	   parent.window.location = window.location;
-	   alert("不是顶层窗口"); 
-}
-
+	if(window.location != parent.window.location){
+		   //将当前页面作为最顶级页面
+		   parent.window.location = window.location;
+		   alert("不是顶层窗口"); 
+	} 
+	function showInputDialog1() {
+		//$('#myModal1').modal('show()');
+		//d1
+		var d1=document.getElementById("d1");
+		d1.dataset.toggle="modal";
+		d1.dataset.target="#myModal1";
+	}
+	
 	function checkForm() {
 		//判断用户是否输入的用户名和密码
 		var stuCode = document.getElementById("userName").value;
 		var password = document.getElementById("password").value;
+		//var mianze = document.getElementsByName("mianze");
+		var isChecked = document.getElementById("mianze").checked;
+	     //alert(isChecked);
+	    if(!(isChecked)){
+	    	document.getElementById("error").innerHTML = "未勾选相应的条款等信息";
+			return false;
+	    }
 		if (stuCode == null || stuCode == "") {
 			document.getElementById("error").innerHTML = "用户名不能为空";
 			return false;
@@ -29,7 +44,6 @@ if(window.location != parent.window.location){
 			document.getElementById("error").innerHTML = "密码不能为空";
 			return false;
 		}
-		
 		return true;
 	}
 	
@@ -103,8 +117,32 @@ if(window.location != parent.window.location){
 	        <button class="btn btn-large btn-primary" type="submit">登录</button>
 			 &nbsp;&nbsp;&nbsp;&nbsp;
 	        </div>
-			<p align="center" style="padding-top: 15px;">版权所有  2020 Le+ </p>
+		 	<p>
+			 	<input id="mianze" name="mianze" type="checkbox" value="" checked ='checked'>
+			 		<font size="1">
+			 			我同意以下
+			 			<font color="red">
+			 				《
+				 				<a id="d1" href="#" onclick="showInputDialog1()"><font size="1" color="red">乐式隐私政策、</font></a>
+				 				<a id="d2" href="#" onclick="showInputDialog2()"><font size="1" color="red">法律声明</font></a>
+				 				以及<a id="d3" href="#" onclick="showInputDialog3()"><font size="1" color="red">乐式iot平台服务条款</font></a>
+			 				》
+			 			</font>
+			 			相关条款。
+			 		</font>
+			 </p>
+			 <%-- <p align="center" style="padding-top: 15px;">
+			版权所有  <jsp:useBean id="now" class="java.util.Date" scope="page"/>
+<fmt:formatDate value="${now}" pattern="yyyy年MM月" /> Le+
+			 </p> --%>
 	      </form>
 	</div>
+	
+	<!-- 模态框1 -->
+	
+	<!-- 模态框2 -->
+	
+	<!-- 模态框3 -->
+	
 </body>
 </html>

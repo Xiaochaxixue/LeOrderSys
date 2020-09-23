@@ -67,7 +67,7 @@
 </head>
 <div class="data_list">
 		<div class="data_list_title">
-			修改企业信息
+			账户信息
 		</div>
 		<button class="btn btn-success" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal">上传营业执照扫描件</button>
 		<form action="ModifyInfoServlet?action=save&paw=${session_user.uid}" method="post" onsubmit="return checkForm()">
