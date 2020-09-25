@@ -143,4 +143,32 @@ public class Tb_addressDao {
 		}
 	}
 
+	public void updateAddressByNewAndOldObj(tb_address oldtb_address, tb_address newtb_address) {
+		// TODO Auto-generated method stub
+		Connection  connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement =null;
+		try {
+			//② 准备SQL语句
+			String sql = "UPDATE tb_address SET acceptor = ?,tel = ?,address = ? WHERE uid=? and acceptor=? and tel=? and address=?";
+			//③ 获取集装箱或者说是车
+			 preparedStatement = connection.prepareStatement(sql);
+			//索引从1开始
+			preparedStatement.setString(1,newtb_address.getAcceptor());
+			preparedStatement.setString(2,newtb_address.getTel());
+			preparedStatement.setString(3,newtb_address.getAddress());
+			
+			preparedStatement.setString(4,oldtb_address.getUid());
+			preparedStatement.setString(5,oldtb_address.getAcceptor());
+			preparedStatement.setString(6,oldtb_address.getTel());
+			preparedStatement.setString(7,oldtb_address.getAddress());
+			//④执行SQL
+			preparedStatement.executeUpdate();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			ConnectionFactory.close(connection, preparedStatement, null);
+		}
+	}
+
 }

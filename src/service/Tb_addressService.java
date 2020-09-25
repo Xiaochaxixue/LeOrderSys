@@ -35,4 +35,12 @@ public class Tb_addressService {
 		Tb_addressDao tb_addressDao = new Tb_addressDao();
 		tb_addressDao.deleteTb_addressInfoByObj(tb_address);
 	}
+
+	public void updateAddressByNewAndOldObj(tb_address tb_addressFromSession, tb_address tb_address) {
+		// TODO Auto-generated method stub
+		Tb_addressDao tb_addressDao = new Tb_addressDao();
+		tb_address Oldtb_address = tb_addressFromSession;
+		tb_address Newtb_address = tb_address;
+		tb_addressDao.updateAddressByNewAndOldObj(Oldtb_address,Newtb_address);
+	}
 }

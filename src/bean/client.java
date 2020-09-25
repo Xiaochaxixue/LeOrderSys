@@ -16,6 +16,12 @@ public class client {
 	private String picture;//用户的营业执照 新增字段，存储用户的营业执照扫描件。
 	
 	
+	@Override
+	public String toString() {
+		return "client [uid=" + uid + ", paw=" + paw + ", corname=" + corname + ", coraddress=" + coraddress
+				+ ", contact=" + contact + ", phone=" + phone + ", address0=" + address0 + ", address1=" + address1
+				+ ", address2=" + address2 + ", picture=" + picture + "]";
+	}
 	public String getPicture() {
 		return picture;
 	}

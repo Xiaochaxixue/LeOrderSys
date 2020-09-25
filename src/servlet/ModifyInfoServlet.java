@@ -77,18 +77,45 @@ public class ModifyInfoServlet extends HttpServlet {
 			 * 将用户信息也随着客户信息的改变而改变，改变客户的用户登录信息
 			 */
 			if(newpaw==""||newpaw==null){
-				
-				request.setAttribute("mainRight", "/WEB-INF/jsp/blank.jsp");
-				request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+				response.sendRedirect(getServletContext().getContextPath()+"/ModifyInfoServlet?action=list");
+				return;
 			}else{
 				user User = new user();
 				User.setUid(uid);
-				System.out.println("User.setUid(uid):"+uid);
 				User.setPaw(psw);
-				System.out.println("User.setPaw(psw):"+psw);
 				UserService.updateUserInfoByObj(User);
 				response.sendRedirect(getServletContext().getContextPath()+"/LogOutServlet");
 			}
+		}else if(action.equals("resetPaw")){
+			/**
+			 * 重置密码
+			 */
+			String newpaw = request.getParameter("newpaw");
+			String newpaw1 = request.getParameter("newpaw1");
+			if(newpaw==null||newpaw.isEmpty()||newpaw1==null||newpaw1.isEmpty()){
+				request.getSession().setAttribute("tip","输入信息不完整！请重新输入相关信息。");
+				response.sendRedirect(getServletContext().getContextPath()+"/ModifyInfoServlet?action=list");
+				return;
+			}else if(!(newpaw.equals(newpaw1))){
+				request.getSession().setAttribute("tip","两次输入的的信息不相同，请重新输入信息!");
+				response.sendRedirect(getServletContext().getContextPath()+"/ModifyInfoServlet?action=list");
+				return;
+			}
+			//更新密码
+			user  User = new user();
+			User = (user) request.getSession().getAttribute("session_user");
+			String uid = User.getUid();
+			client Client = clientService.findClientInfoByUid(uid);
+			Client.setPaw(newpaw);
+			//返回到展示信息页面，退出系统，要求重新登录
+			User.setUid(uid);
+			User.setPaw(newpaw);
+			ClientService.updateClientInfoByObj(Client);
+			UserService.updateUserInfoByObj(User);
+			response.sendRedirect(getServletContext().getContextPath()+"/LogOutServlet");
+		}else{
+			request.getSession().setAttribute("tip","非法操作！已经记录，管理员将会处理，多次非法操作将冻结账号。");
+			response.sendRedirect(getServletContext().getContextPath()+"/ModifyInfoServlet?action=list");
 		}
 	}
 

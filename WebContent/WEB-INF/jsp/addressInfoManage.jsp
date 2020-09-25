@@ -9,12 +9,17 @@
 		toastr.options = {"closeButton": true,
 				positionClass:"toast-center-center"};
 		if((tip!=null)&&(tip!="")){
-			toastr.error(tip);
+			toastr.info(tip);
 			<%
 			request.getSession().removeAttribute("tip");
 			%>
 		}
 	});
+	function getTip(){
+		toastr.options = {"closeButton": true,
+				positionClass:"toast-center-center"};
+		toastr.info("默认地址只支持修改不支持删除哦！");
+	}
 	
 	$(document).ready(function(){
 		$("#addressInfo").addClass("active");
@@ -37,6 +42,16 @@
 						<td>操作</td>
 					</tr>
 				</thead>
+					<tr>
+						<td>${Client.contact}</td>
+						<td>${Client.phone}</td>
+						<td>${Client.address0}</td>
+						<td>
+							<button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='Tb_addressServlet?action=proupdate&id=default'">修改</button>&nbsp;
+							<button class="btn btn-mini btn-info" type="button" onclick="getTip()">删除</button>
+							<button class="btn btn-mini btn-default btn-link" type="button">默认地址</button>
+						</td>
+					</tr>
 					<c:forEach items="${tb_addresss}"  var="tb_address" varStatus="stat">
 						<tr>
 							<td>${tb_address.acceptor}</td>

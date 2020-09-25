@@ -70,7 +70,7 @@
 			账户信息
 		</div>
 		<button class="btn btn-success" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal">上传营业执照扫描件</button>
-		<form action="ModifyInfoServlet?action=save&paw=${session_user.uid}" method="post" onsubmit="return checkForm()">
+		<form action="ModifyInfoServlet?action=save&paw=${session_user.paw}" method="post" onsubmit="return checkForm()">
 			<div class="data_form" >
 				<table align="center">
 					<tr>
@@ -78,16 +78,21 @@
 						<td><input type="text" id="uid"  name="uid" value="${session_user.uid}"  style="margin-top:5px;height:30px;" readonly="true"/></td>
 					</tr>
 					<tr>
+						<td><font color="red"></font>密码：</td>
+						<td><input type="password" id="paw"  name="paw" value="${client.paw}" style="margin-top:5px;height:30px;" readonly="true"/></td>
+						<td><button class="btn btn-info btn-link" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal2">修改</button></td>
+					</tr>
+					<!-- <tr>
 						<td><font color="red"></font>新密码：</td>
 						<td><input type="password" id="newpaw"  name="newpaw" style="margin-top:5px;height:30px;" /></td>
 					</tr>
 					<tr>
 						<td><font color="red"></font>确认密码：</td>
 						<td><input type="password" id="newpaw1"  name="newpaw1" style="margin-top:5px;height:30px;" /></td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td><font color="red"></font>公司名称：</td>
-						<td><input type="text" id="corname"  name="corname" value="${client.corname}"  style="margin-top:5px;height:30px;" /></td>
+						<td><input type="text" id="corname"  name="corname" value="${client.corname}"  style="margin-top:5px;height:30px;" readonly="true"/></td>
 					</tr>
 					<tr>
 						<td><font color="red"></font>公司地址：</td>
@@ -131,6 +136,33 @@
 			            <div class="modal-body">
 							<p>&nbsp;&nbsp;
 								<strong>请选择相应的文件：</strong><input type="file" name="picture" id="picture" value="请选择文件..." style="margin-top:5px;height:30px;"/>
+							</p>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			                <button type="submit" class="btn btn-primary">提交</button>
+			            </div>
+		            </form>
+		        </div>
+		    </div>
+		</div>
+		<!-- 增加密码修改模态框 -->
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		        	<form name="myform" action="ModifyInfoServlet?action=resetPaw" method="post">
+			            <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			                <h4 class="modal-title">修改密码信息</h4>
+			                <p><font size="2" color="red">请慎重修改密码，如果密码成功修改，则会强制退出系统，要求重新登入系统！</font></p>
+			            </div>
+			            <div class="modal-body">
+			            
+							<p>&nbsp;&nbsp;&nbsp;
+								<strong><font color="red">*</font>新密码:</strong><input type="password" name="newpaw" id="newpaw" style="margin-top:5px;height:30px;"/>
+							</p>
+							<p>
+								<strong><font color="red">*</font>确认密码:</strong><input type="password" name="newpaw1" id="newpaw" style="margin-top:5px;height:30px;"/>
 							</p>
 			            </div>
 			            <div class="modal-footer">

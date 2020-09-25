@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.client;
 import bean.tb_address;
 import bean.user;
+import service.ClientService;
 import service.Tb_addressService;
 
 /**
@@ -47,6 +49,7 @@ public class Tb_addressServlet extends HttpServlet {
 		 */
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
+		String id = request.getParameter("id");
 		user  User = new user();
 		User = (user) request.getSession().getAttribute("session_user");
 		if(User==null){
@@ -72,7 +75,10 @@ public class Tb_addressServlet extends HttpServlet {
 			 * 在数据库中拿取所有信息，所有的地址信息
 			 */
 			tb_addresss = tb_addressService.findAllAddressInfoByUid(uid);
+			ClientService clientService = new ClientService();
+			client Client = clientService.findClientInfoByUid(uid);//方便展示默认地址
 			request.setAttribute("tb_addresss", tb_addresss);
+			request.getSession().setAttribute("Client", Client);
 			request.setAttribute("mainRight", "/WEB-INF/jsp/addressInfoManage.jsp");//发票jsp静态文件
 			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);//在main.jsp页面展示发票的静态jsp页面
 		}else if(action.equals("add")){
@@ -124,6 +130,7 @@ public class Tb_addressServlet extends HttpServlet {
 			 * 操作，将相应的信息存入
 			 */
 			tb_addressService.addTb_addressServlet(Tb_address);
+			request.getSession().setAttribute("tip", "添加信息成功");
 			response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
 		}else if(action.equals("proupdate")){
 			/**
@@ -141,8 +148,20 @@ public class Tb_addressServlet extends HttpServlet {
 			Tb_address.setAcceptor(acceptor);
 			Tb_address.setTel(tel);
 			Tb_address.setAddress(address);
-			
-			
+			/**
+			 * 如果是默认地址的话
+			 * 则需要进行额外的处理
+			 */
+			request.getSession().setAttribute("Tb_address", Tb_address);
+			System.out.println("acceptor:"+acceptor+" tel:"+tel+" address:"+address);
+			if(id.equals("default")){
+				request.setAttribute("id", id);
+				request.setAttribute("mainRight", "/WEB-INF/jsp/addressUpdate.jsp");
+				request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+				return;
+			}
+			request.setAttribute("mainRight", "/WEB-INF/jsp/addressUpdate.jsp");
+			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
 		}else if(action.equals("delete")){
 			/**
 			 * 删除地址信息
@@ -159,6 +178,7 @@ public class Tb_addressServlet extends HttpServlet {
 			Tb_address.setTel(tel);
 			Tb_address.setAddress(address);
 			tb_addressService.deleteTb_addressInfoByObj(Tb_address);
+			request.getSession().setAttribute("tip", "删除信息成功");
 			response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
 		}else if(action.equals("reset")){
 			/**
@@ -175,6 +195,35 @@ public class Tb_addressServlet extends HttpServlet {
 			Tb_address.setAcceptor(acceptor);
 			Tb_address.setTel(tel);
 			Tb_address.setAddress(address);
+			/**
+			 * client里面修改默认地址
+			 * 将client里面的默认地址存入
+			 * 地址管理表中
+			 * 1，将数据库中原本默认地址存入地址管理表
+			 * 2，将要设置的地址更新到默认地址中
+			 * 3，将要设置的地址删除
+			 * 4，将更新的展示出来
+			 */
+			client Client = (client) request.getSession().getAttribute("Client");
+			System.out.println(Client.toString());
+			tb_address Tb_addressFromClient = new tb_address();
+			Tb_addressFromClient.setUid(uid);
+			Tb_addressFromClient.setAcceptor(Client.getContact());
+			Tb_addressFromClient.setTel(Client.getPhone());
+			Tb_addressFromClient.setAddress(Client.getAddress0());
+			tb_addressService.addTb_addressServlet(Tb_addressFromClient);//原有默认地址存入地址表
+			/**
+			 * 默认地址修改到client里面
+			 */
+			Client.setContact(acceptor);
+			Client.setPhone(tel);
+			Client.setAddress0(address);
+			ClientService clientService = new ClientService();
+			clientService.updateClientInfoByObj(Client);
+			//地址表删除Tb_address
+			tb_addressService.deleteTb_addressInfoByObj(Tb_address);
+			request.getSession().setAttribute("tip", "默认地址设置成功");
+			response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
 			
 		}
 		else if(action.equals("update")){
@@ -184,15 +233,35 @@ public class Tb_addressServlet extends HttpServlet {
 			String acceptor;//收货人
 			String tel;//收货电话号码
 			String address;//收货地址
-			acceptor = request.getParameter("id2");
-			tel = request.getParameter("id3");
-			address = request.getParameter("id4");
+			acceptor = request.getParameter("acceptor");
+			tel = request.getParameter("tel");
+			address = request.getParameter("address");
 			tb_address Tb_address = new tb_address();
 			Tb_address.setUid(uid);
 			Tb_address.setAcceptor(acceptor);
 			Tb_address.setTel(tel);
 			Tb_address.setAddress(address);
-			//
+			tb_address Tb_addressFromSession = new tb_address();
+			Tb_addressFromSession = (tb_address) request.getSession().getAttribute("Tb_address");
+			
+			if(id.equals("default")){
+				/**
+				 * 修改默认地址
+				 */
+				ClientService clientService = new ClientService();
+				//client Client = clientService.findClientInfoByUid(uid);//方便展示默认地址
+				client Client = (client) request.getSession().getAttribute("Client");
+				Client.setContact(acceptor);
+				Client.setPhone(tel);
+				Client.setAddress0(address);
+				clientService.updateClientInfoByObj(Client);
+				request.getSession().setAttribute("tip", "修改信息成功");
+				response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
+				return;
+			}
+			
+			tb_addressService.updateAddressByNewAndOldObj(Tb_addressFromSession,Tb_address);
+			response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
 		}else{
 			/**
 			 * 当没有其它action为出口时，则从这个入口
