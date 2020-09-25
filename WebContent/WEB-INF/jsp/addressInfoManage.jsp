@@ -24,34 +24,36 @@
 		<div class="data_list_title">
 			地址信息管理
 		</div>
-				<button class="btn btn-success" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal">新增地址</button><!-- onclick="javascript:window.location='receiptInfoServlet?action=add'" -->
+				<button class="btn btn-success" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal">新增地址</button>
 		<div>
 			<div class="data_form" >
-			<c:forEach items="${tb_addresss}"  var="tb_address" varStatus="stat">
+			
 				<table class="table  table-bordered table-hover datatable"  style="width:700px" align="center">
-				<!--items:表示要循环遍历的元素   var:代表当前集合中每一个元素     varStatus代表循环状态的变量名-->
+				<thead>
+					<tr>
+						<th>收货人</th>
+						<th>联系电话</th>
+						<th>收货地址</th>
+						<td>操作</td>
+					</tr>
+				</thead>
+					<c:forEach items="${tb_addresss}"  var="tb_address" varStatus="stat">
 						<tr>
-							<td width="50%" style="text-align:center"><strong>收货人:</strong></td>
 							<td>${tb_address.acceptor}</td>
-						</tr>	
-						<tr>	
-							<td width="50%" style="text-align:center"><strong>联系电话:</strong></td>
 							<td>${tb_address.tel}</td>
-						</tr>
-						<tr>
-							<td width="50%" style="text-align:center"><strong>收货地址:</strong></td>
 							<td>${tb_address.address}</td>
-						</tr>	
+							<td>
+								<button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='Tb_addressServlet?action=proupdate&id=${session_user.uid}&id2=${tb_address.acceptor}&id3=${tb_address.tel}&id4=${tb_address.address}'">修改</button>&nbsp;
+								<button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='Tb_addressServlet?action=delete&id=${session_user.uid}&id2=${tb_address.acceptor}&id3=${tb_address.tel}&id4=${tb_address.address}'">删除</button>
+								<button class="btn btn-mini btn-default" type="button" onclick="javascript:window.location='Tb_addressServlet?action=reset&id=${session_user.uid}&id2=${tb_address.acceptor}&id3=${tb_address.tel}&id4=${tb_address.address}'">设为默认地址</button>
+							</td>
+						</tr>
+					</c:forEach>
 				</table>
-			</c:forEach>
-				<%-- <div align="center">
-					<font id="error" color="red">${error}</font>
-				</div> --%>
 			</div>
 	</div>
 </div>
-<!-- 增加发票模态框 -->
-<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button> -->
+<!-- 增加地址模态框 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

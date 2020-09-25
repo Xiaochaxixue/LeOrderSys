@@ -38,6 +38,24 @@
 							<td width="50%" style="text-align:center"><strong>企业纳税人识别号:</strong></td>
 							<td>${receipt.tax}</td>
 						</tr>
+						<c:if test="${not empty receipt.bank||!(receipt.bank eq null)}">
+							<tr>
+								<td width="50%" style="text-align:center"><strong>开户银行:</strong></td>
+								<td>${receipt.bank}</td>
+							</tr>	
+							<tr>
+								<td width="50%" style="text-align:center"><strong>银行账号:</strong></td>
+								<td>${receipt.banknumber}</td>
+							</tr>	
+							<tr>
+								<td width="50%" style="text-align:center"><strong>注册地址:</strong></td>
+								<td>${receipt.registeadd}</td>
+							</tr>	
+							<tr>
+								<td width="50%" style="text-align:center"><strong>注册电话:</strong></td>
+								<td>${receipt.registecall}</td>
+							</tr>	
+						</c:if>
 				</table>
 			</c:forEach>
 				<div align="center">
@@ -54,7 +72,7 @@
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	                <h4 class="modal-title">增加发票信息</h4>
-	                <p><font size="2" color="red">该功能目前只支持增加功能，暂时不支持客户自己修改，如要修改请联系管理员！</font></p>
+	                <p><font size="2" color="red">该功能目前只支持增加功能，暂时不支持客户自己修改，如要修改，请联系管理员！</font></p>
 	            </div>
 	            <div class="modal-body">
 	            
@@ -77,14 +95,13 @@
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        	<form name="myform" action="receiptInfoServlet?action=add" method="post"><!--  onsubmit="return checkForm()"暂时不对其合法性进行验证 -->
+        	<form name="myform" action="receiptInfoServlet?action=addplus" method="post">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	                <h4 class="modal-title">增加增值专用发票信息</h4>
-	                <p><font size="2" color="red">该功能目前只支持增加功能，暂时不支持客户自己修改，如要修改请联系管理员！</font></p>
+	                <p><font size="2" color="red">该功能目前只支持增加功能，暂时不支持客户自己修改，如要修改，请联系管理员！</font></p>
 	            </div>
 	            <div class="modal-body">
-	            
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<strong><font color="red">*</font>发票抬头:</strong><input type="text" name="title" id="title" style="margin-top:5px;height:30px;"/>
 					</p>
@@ -92,16 +109,16 @@
 						<strong><font color="red">*</font>企业纳税人识别号:</strong><input type="text" name="tax" id="tax" style="margin-top:5px;height:30px;"/>
 					</p>
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<strong><font color="red">*</font>开户银行:</strong><input type="text" name="tax" id="tax" style="margin-top:5px;height:30px;"/>
+						<strong><font color="red">*</font>开户银行:</strong><input type="text" name="bank" id="bank" style="margin-top:5px;height:30px;"/>
 					</p>
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<strong><font color="red">*</font>银行账号:</strong><input type="text" name="tax" id="tax" style="margin-top:5px;height:30px;"/>
+						<strong><font color="red">*</font>银行账号:</strong><input type="text" name="banknumber" id="banknumber" style="margin-top:5px;height:30px;"/>
 					</p>
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<strong>注册地址:</strong><input type="text" name="tax" id="tax" style="margin-top:5px;height:30px;"/>
+						<strong>注册地址:</strong><input type="text" name="registeadd" id="registeadd" style="margin-top:5px;height:30px;"/>
 					</p>
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<strong>注册电话:</strong><input type="text" name="tax" id="tax" style="margin-top:5px;height:30px;"/>
+						<strong>注册电话:</strong><input type="text" name="registecall" id="registecall" style="margin-top:5px;height:30px;"/>
 					</p>
 	            </div>
 	            <div class="modal-footer">

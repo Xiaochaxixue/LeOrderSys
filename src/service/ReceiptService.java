@@ -32,4 +32,18 @@ public class ReceiptService {
 		receiptDao.addReceiptInfoByObj(Receipt);
 	}
 
+	public receipt findReceiptIsExitByObj(receipt receipt) {
+		// TODO Auto-generated method stub
+		receipt Receipt = new receipt();
+		ReceiptDao receiptDao = new ReceiptDao();
+		Receipt = receiptDao.findReceiptIsExitByObj(receipt);
+		return Receipt;
+	}
+
+	public void addReceiptInfoByObjPlus(receipt receipt) {
+		// TODO Auto-generated method stub
+		ReceiptDao receiptDao = new ReceiptDao();
+		receiptDao.addReceiptInfoByObjPlus(receipt);
+	}
+
 }

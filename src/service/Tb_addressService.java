@@ -29,4 +29,10 @@ public class Tb_addressService {
 		Tb_addressDao tb_addressDao = new Tb_addressDao();
 		tb_addressDao.addTb_addressServlet(tb_address);
 	}
+
+	public void deleteTb_addressInfoByObj(tb_address tb_address) {
+		// TODO Auto-generated method stub
+		Tb_addressDao tb_addressDao = new Tb_addressDao();
+		tb_addressDao.deleteTb_addressInfoByObj(tb_address);
+	}
 }

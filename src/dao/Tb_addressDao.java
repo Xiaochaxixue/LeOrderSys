@@ -118,4 +118,29 @@ public class Tb_addressDao {
 		}
 	}
 
+	public void deleteTb_addressInfoByObj(tb_address tb_address) {
+		// TODO Auto-generated method stub
+		Connection  connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement =null;
+		
+		try {
+			//② 准备SQL语句
+			String sql = "DELETE FROM tb_address WHERE uid=? and acceptor=? and tel=? and address=?";
+			//③ 获取集装箱或者说是车
+			 preparedStatement = connection.prepareStatement(sql);
+			//索引从1开始
+			preparedStatement.setString(1,tb_address.getUid());
+			preparedStatement.setString(2,tb_address.getAcceptor());
+			preparedStatement.setString(3,tb_address.getTel());
+			preparedStatement.setString(4,tb_address.getAddress());
+			//执行该sql语句
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			ConnectionFactory.close(connection, preparedStatement, null);
+		}
+	}
+
 }

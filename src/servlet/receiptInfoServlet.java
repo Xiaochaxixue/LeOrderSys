@@ -56,19 +56,15 @@ public class receiptInfoServlet extends HttpServlet {
 		 */
 		ReceiptService receiptService = new ReceiptService();//获取发票的服务层的服务
 		
-		if(action.equals("list")){
-			/**
-			 * 展示客户的所有的发票信息，
-			 * 给客户展示相应的发票信息
-			 */
+		if(action.equals("list")){//展示发票信息
 			List<receipt> receipts = new ArrayList<receipt>();
 			/**
 			 * 从数据库中拿取所有当前用户的所有发票信息；
 			 */
-			//然后通过该服务获取dao层的服务然后获取所有的发票的发票信息。
+			//然后通过该服务获取dao层的服务然后获取所有的发票信息。
 			receipts = receiptService.findAllReceiptsByUid(uid);
 			/**
-			 * 通过用户的uid获取用户曾经的发票信息，然后展示出来。
+			 * 通过用户的uid获取用户曾经的所有发票信息，然后展示出来。
 			 */
 			request.setAttribute("receipts", receipts);//将所有的发票信息存入请求头里面
 			request.setAttribute("mainRight", "/WEB-INF/jsp/receiptsInfoManage.jsp");//发票jsp静态文件
@@ -106,15 +102,58 @@ public class receiptInfoServlet extends HttpServlet {
 			 * 然后返回到开始的页面
 			 * 当前面两种情况都不存在则对该发票信息进行添加。
 			 */
-			/**
-			 * 将信息封装成类，并通过该类对
-			 * 数据库信息进行添加。
-			 */
 			receipt Receipt = new receipt();
 			Receipt.setUid(uid);
 			Receipt.setTitle(title);
 			Receipt.setTax(tax);
 			receiptService.addReceiptInfoByObj(Receipt);
+			response.sendRedirect(getServletContext().getContextPath()+"/receiptInfoServlet?action=list");
+		}else if(action.equals("addplus")){
+			/**
+			 * 添加专用增值发票
+			 */
+			String title = request.getParameter("title");//公司抬头（必选）,从前端获取数据，存入后台数据库。
+			String tax = request.getParameter("tax");//公司发票税号（必选）
+			String bank = request.getParameter("bank");//开户银行
+			String banknumber = request.getParameter("banknumber");//银行账号（必选）
+			String registeadd = request.getParameter("registeadd");//注册地址
+			String registecall = request.getParameter("registecall");//注册电话
+			
+			receipt Receipt = new receipt();
+			Receipt.setUid(uid);
+			Receipt.setTitle(title);
+			Receipt.setTax(tax);
+			Receipt.setBank(bank);
+			Receipt.setBanknumber(banknumber);
+			Receipt.setRegisteadd(registeadd);
+			Receipt.setRegistecall(registecall);
+			/**
+			 * 将前端获得的数据封装成对象
+			 * 并且存入receipt中，为了给
+			 * 后续匹配使用。
+			 */
+			receipt ReceiptMatch = new receipt();//匹配发票类，匹配数据库是否已经存在该数据
+			ReceiptMatch = receiptService.findReceiptIsExitByObj(Receipt);//查询匹配数据库中是否已经存在该数据
+			if(title==null||title.isEmpty()||tax==null||tax.isEmpty()||banknumber==null||banknumber.isEmpty()||bank==null||bank.isEmpty()){
+				/*request.setAttribute("error", "请输入数据再进行提交");*/
+				request.getSession().setAttribute("tip","输入信息不完整，请重新添加数据");
+				response.sendRedirect(getServletContext().getContextPath()+"/receiptInfoServlet?action=list");
+				return;
+			}else if(ReceiptMatch!=null){
+				/**
+				 * 如果发现数据库已经存在这些数据
+				 * 则给出提示说数据已经存在，并且
+				 * 返回到list页面，展示给用户
+				 */
+				request.getSession().setAttribute("tip","该发票信息已经存在，请重新添加！");
+				response.sendRedirect(getServletContext().getContextPath()+"/receiptInfoServlet?action=list");
+				return;
+			}
+			/**
+			 * 如果通过前面两种判断则对其进行入库处理
+			 */
+			//receipt
+			receiptService.addReceiptInfoByObjPlus(Receipt);
 			response.sendRedirect(getServletContext().getContextPath()+"/receiptInfoServlet?action=list");
 		}else{
 			/**

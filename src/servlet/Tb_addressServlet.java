@@ -41,6 +41,10 @@ public class Tb_addressServlet extends HttpServlet {
 		 * 地址管理类主要有收货人、收货电话号码、收货地址等信息
 		 * 此外与地址相关的还有用户名
 		 */
+		/**
+		 * 新添修改、删除、设置为默认地址
+		 * 等相关功能2020/09/24 songlj 16：53PM
+		 */
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
 		user  User = new user();
@@ -60,6 +64,9 @@ public class Tb_addressServlet extends HttpServlet {
 			 * 将所有的地址信息存入到List集合中
 			 * 然后在前端进行展示
 			 */
+			/**
+			 * 新增默认地址一项2020/09/24 songlj 14：33PM
+			 */
 			List<tb_address> tb_addresss = new ArrayList<tb_address>();//存入到list中
 			/**
 			 * 在数据库中拿取所有信息，所有的地址信息
@@ -74,7 +81,6 @@ public class Tb_addressServlet extends HttpServlet {
 			 * 添加地址信息后，返回到地址展示
 			 * 信息页面
 			 */
-			//request.getParameter("");
 			tb_address Tb_address = new tb_address();
 			String acceptor = request.getParameter("acceptor");
 			String tel = request.getParameter("tel");
@@ -119,6 +125,74 @@ public class Tb_addressServlet extends HttpServlet {
 			 */
 			tb_addressService.addTb_addressServlet(Tb_address);
 			response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
+		}else if(action.equals("proupdate")){
+			/**
+			 * 预修改地址信息
+			 */
+			//String uid;
+			String acceptor;//收货人
+			String tel;//收货电话号码
+			String address;//收货地址
+			acceptor = request.getParameter("id2");
+			tel = request.getParameter("id3");
+			address = request.getParameter("id4");
+			tb_address Tb_address = new tb_address();
+			Tb_address.setUid(uid);
+			Tb_address.setAcceptor(acceptor);
+			Tb_address.setTel(tel);
+			Tb_address.setAddress(address);
+			
+			
+		}else if(action.equals("delete")){
+			/**
+			 * 删除地址信息
+			 */
+			String acceptor;//收货人
+			String tel;//收货电话号码
+			String address;//收货地址
+			acceptor = request.getParameter("id2");
+			tel = request.getParameter("id3");
+			address = request.getParameter("id4");
+			tb_address Tb_address = new tb_address();
+			Tb_address.setUid(uid);
+			Tb_address.setAcceptor(acceptor);
+			Tb_address.setTel(tel);
+			Tb_address.setAddress(address);
+			tb_addressService.deleteTb_addressInfoByObj(Tb_address);
+			response.sendRedirect(getServletContext().getContextPath()+"/Tb_addressServlet?action=list");
+		}else if(action.equals("reset")){
+			/**
+			 * 重置默认地址
+			 */
+			String acceptor;//收货人
+			String tel;//收货电话号码
+			String address;//收货地址
+			acceptor = request.getParameter("id2");
+			tel = request.getParameter("id3");
+			address = request.getParameter("id4");
+			tb_address Tb_address = new tb_address();
+			Tb_address.setUid(uid);
+			Tb_address.setAcceptor(acceptor);
+			Tb_address.setTel(tel);
+			Tb_address.setAddress(address);
+			
+		}
+		else if(action.equals("update")){
+			/**
+			 * 修改地址信息
+			 */
+			String acceptor;//收货人
+			String tel;//收货电话号码
+			String address;//收货地址
+			acceptor = request.getParameter("id2");
+			tel = request.getParameter("id3");
+			address = request.getParameter("id4");
+			tb_address Tb_address = new tb_address();
+			Tb_address.setUid(uid);
+			Tb_address.setAcceptor(acceptor);
+			Tb_address.setTel(tel);
+			Tb_address.setAddress(address);
+			//
 		}else{
 			/**
 			 * 当没有其它action为出口时，则从这个入口

@@ -105,14 +105,6 @@
 						<td><font color="red"></font>默认收货地址：</td>
 						<td><input type="text" id="address0"  name="address0" value="${client.address0}"  style="margin-top:5px;height:30px;" /></td>
 					</tr>
-					<%-- <tr>
-						<td>收货地址2：</td>
-						<td><input type="text" id="address1"  name="address1" value="${client.address1}"  style="margin-top:5px;height:30px;" /></td>
-					</tr>
-					<tr>
-						<td>收货地址3：</td>
-						<td><input type="text" id="address2"  name="address2" value="${client.address2}"  style="margin-top:5px;height:30px;" /></td>
-					</tr> --%>
 				</table>
 				<div align="center">
 					<input type="submit" class="btn btn-primary" value="保存"/>
