@@ -98,7 +98,8 @@ public class gujianInfoManageServlet extends HttpServlet {
 			 */
 			gujian guJian = new gujian();
 			String gunum=id;
-			guJian = GujianService.findGujianInfoByGunum(gunum);
+			GujianService gujianService = new GujianService();
+			guJian = gujianService.findGujianInfoByGunum(gunum);
 			/**
 			 * 将所有的商品信息拿出来，存放到list列表里面
 			 */

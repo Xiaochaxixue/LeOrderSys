@@ -94,7 +94,7 @@
 						<li id="dingdanManage"><a href="DingDanManageServlet?action=list"><i class="icon-chevron-right"></i>订单管理</a></li>
 						<li id="client"><a href="clientManageServlet?action=list"><i class="icon-chevron-right"></i>客户管理</a></li>
 						<li id="shoppingInfo"><a href="shoppingInfoManageServlet?action=list"><i class="icon-chevron-right"></i>商品管理</a></li>
-						<li id="tianprice"><a href="tianpriceManageServlet?action=list"><i class="icon-chevron-right"></i>费用管理</a></li>
+						<li id="tianprice"><a href="#"><i class="icon-chevron-right"></i>费用管理</a></li>
 						<li id="gujian"><a href="gujianInfoManageServlet?action=list"><i class="icon-chevron-right"></i>商品确认书管理</a></li>
 						<li id="logOut"><a href="LogOutServlet"><i class="icon-chevron-right"></i>退出系统</a></li>
 					</c:if>
@@ -114,7 +114,7 @@
 						<li id="dingdanManage"><a href="DingDanManageServlet?action=list"><i class="icon-chevron-right"></i>订单管理</a></li>
 						<li id="client"><a href="clientManageServlet?action=list"><i class="icon-chevron-right"></i>客户管理</a></li>
 						<li id="shoppingInfo"><a href="shoppingInfoManageServlet?action=list"><i class="icon-chevron-right"></i>商品管理</a></li>
-						<li id="tianprice"><a href="tianpriceManageServlet?action=list"><i class="icon-chevron-right"></i>费用管理</a></li>
+						<li id="tianprice"><a href="#"><i class="icon-chevron-right"></i>费用管理</a></li>
 						<li id="gujian"><a href="#"><i class="icon-chevron-right"></i>商品确认书管理</a></li>
 						<li id="logOut"><a href="LogOutServlet"><i class="icon-chevron-right"></i>退出系统</a></li>
 					</c:if>
@@ -123,7 +123,7 @@
 						<li id="dingdanManage"><a href="#"><i class="icon-chevron-right"></i>订单管理</a></li>
 						<li id="client"><a href="#"><i class="icon-chevron-right"></i>客户管理</a></li>
 						<li id="shoppingInfo"><a href="#"><i class="icon-chevron-right"></i>商品管理</a></li>
-						<li id="tianprice"><a href="tianpriceManageServlet?action=list"><i class="icon-chevron-right"></i>费用管理</a></li>
+						<li id="tianprice"><a href="#"><i class="icon-chevron-right"></i>费用管理</a></li>
 						<li id="gujian"><a href="gujianInfoManageServlet?action=list"><i class="icon-chevron-right"></i>商品确认书管理</a></li>
 						<li id="logOut"><a href="LogOutServlet"><i class="icon-chevron-right"></i>退出系统</a></li>
 					</c:if>

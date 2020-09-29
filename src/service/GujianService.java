@@ -39,7 +39,7 @@ public class GujianService {
 
 
 	
-	public static gujian findGujianInfoByGunum(String gunum) {
+	public  gujian findGujianInfoByGunum(String gunum) {
 		// TODO Auto-generated method stub
 		gujian guJian = new gujian();
 		guJian = GujianDao.findGujianInfoByGunum(gunum);

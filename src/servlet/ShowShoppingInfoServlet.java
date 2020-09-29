@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,11 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import bean.client;
 import bean.dingdan;
 import bean.dingshopping;
+import bean.gujian;
 import bean.shoppinginfo;
 import bean.user;
 import service.ClientService;
 import service.DingDanService;
 import service.DingShoppingService;
+import service.GujianService;
 import service.ShoppingInfoService;
 import utils.RandomUtil;
 import utils.ShowCraftInfo;
@@ -92,9 +95,59 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 		 */
 		if(action.equals("list")){
 			/**
+			 * 2020/09/29 11：03PM songlj
 			 * 将拿到的信息list存入到请求头里面
+			 * 此中不仅仅是商品信息的list集合
+			 * 还有相应的固件信息和相应的工艺说明。
 			 */
 			dingShoppings = dingShoppingService.findAllSelectedDingShoppingByUid(uid);
+			/**
+			 * dingshopping 的list遍历，找到固件信息以及工艺说明。
+			 */
+			Iterator<dingshopping> it = dingShoppings.iterator();
+			Map<String,gujian> gujianMap = new HashMap<String,gujian>();
+			Map<String,Map<String,String>> craftInfoLists = new HashMap<String,Map<String,String>>();//工艺信息,将工艺信息存储起来
+			while(it.hasNext()){
+				/**
+				 * 将与商品信息相关的固件信息，与工艺信息取出来
+				 * 并一起放入请求头里面，再在前端进行获取数据
+				 * 然后进行展示数据
+				 */
+				dingshopping dingShopping =new dingshopping();
+				dingShopping = it.next();
+				String gunum = dingShopping.getGunum();//得到固件编号，然后根据固件的编号找出固件信息以及工艺信息
+				gujian guJian = new gujian();
+				GujianService gujianService = new GujianService();
+				guJian  = gujianService.findGujianInfoByGunum(gunum);//将相应商品信息的固件信息存入到gujian类
+				gujianMap.put(gunum, guJian);//将固件信息存入到固件map中
+				
+				/*********（分割线）上面为固件相关信息，下面为工艺说明信息**********/
+				String pt = null;
+					if(dingShopping.getCtype().contains("MK")||dingShopping.getCtype().contains("mk")){
+						/**
+						 * 判断是否是模块，如果是的话提交到ShowCraftInfo类
+						 * 进行工艺说明细化，传入pt，然后进行解析，返回Map
+						 * Map<String,String>该map存的数据就是工艺的详细说明
+						 * 通过map将数据显示出来，通过键值对的形式获取该值
+						 * 如果判断不为模块，则不把它丢给ShowCraftInfo类
+						 * 而是将其赋值为null值，然后再前端判断是否为空值
+						 * 若为空值则在前端不进行处理。不进行展示。
+						 * 在展示之前就事先判断pt是否存在
+						 * 若不存在则不进行后续工艺说明的展示
+						 * 反之，亦然2020/09/29 16：10PM
+						 */
+						pt = dingShopping.getPt();//工艺说明字段
+						Map<String,String> craftInfoList = new HashMap<String,String>();
+						ShowCraftInfo ShowCraftInfo = new ShowCraftInfo();
+						craftInfoList = ShowCraftInfo.getDetailCraftInfoByPt(pt);//getDetailCraftInfoByPt得到细节的工艺说明
+						//将工艺说明信息存入到相关的的map中
+						craftInfoLists.put(pt, craftInfoList);//将相应的工艺说明map存入到Map集合中
+						//前端如何获取该值，通过el表达式嵌套获取该值
+					}
+			}
+			request.setAttribute("gujianMap",gujianMap);//将固件信息存入到请求头里面。2020/09/29 11：52PM songlj
+			request.setAttribute("craftInfoLists",craftInfoLists);//将工艺信息存入到请求头里面。2020/09/29 11：52PM songlj
+			
 			request.setAttribute("dingShoppings",dingShoppings);
 			request.setAttribute("mainRight", "/WEB-INF/jsp/ShowShoppingInfo.jsp");
 			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
@@ -103,6 +156,7 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			 * 将可选的商品信息拿出来，并将信息存放到dingShoppings中的List
 			 * List集合中含有所有的可选的商品信息，并将dingShoppings对象
 			 * 存放到request请求头里面，便于前端展示
+			 * 2020/09/29 11：03PM
 			 */
 			String flag = "selected";
 			dingShoppings = dingShoppingService.findAllNoSelectDingShopping();
@@ -215,7 +269,6 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 				for(int i=0;i<Ischeckeds.length;i++){
 					/*System.out.println(Ischeckeds[i]);*/
 					String cnum = Ischeckeds[i];
-					
 					/**
 					 * 将选中的商品信息的总金额拿出来
 					 * 将各个金额叠加，并存入订单表

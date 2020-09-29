@@ -3,8 +3,6 @@ package bean;
 //import java.util.Date;
 
 public class dingshopping {
-	
-	
 	private String ddanNum;//订单编号
 	private String uid;//新添加的字段：用户id 2020/08/21 11：59 songlj
 	private String gunum;//固件编号
@@ -26,7 +24,7 @@ public class dingshopping {
 	 */
 	
 	private int tiantype;//天线类型 ，需求更改该字段可能不用
-	private String pt;//排针焊法，需求更改该字段可能不用
+	private String pt;//排针焊法，需求更改该字段可能不用（改为了工艺说明字段）
 	private int pnum;//排针数量，需求更改该字段可能不用
 	
 	
@@ -120,7 +118,6 @@ public class dingshopping {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-
 	public String getRuDate() {
 		return ruDate;
 	}
@@ -133,23 +130,15 @@ public class dingshopping {
 	public void setSstate(int sstate) {
 		this.sstate = sstate;
 	}
-
-
 	public String getCtype() {
 		return ctype;
 	}
-
-
 	public void setCtype(String ctype) {
 		this.ctype = ctype;
 	}
-
-
 	public String getCname() {
 		return cname;
 	}
-
-
 	public void setCname(String cname) {
 		this.cname = cname;
 	}

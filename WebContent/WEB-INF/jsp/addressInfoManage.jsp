@@ -39,7 +39,7 @@
 						<th>收货人</th>
 						<th>联系电话</th>
 						<th>收货地址</th>
-						<td>操作</td>
+						<td>操作</td>   
 					</tr>
 				</thead>
 					<tr>

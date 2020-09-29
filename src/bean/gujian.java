@@ -8,7 +8,7 @@ public class gujian {
 	private String guname;//固件名
 	private int gustate;//固件状态
 	private String gups;//固件备注
-	private String qfile;//产品确认书
+	private String qfile;//产品确认书(样品确认书)
 	private String ruDate;//入库时间
 	public String getGunum() {
 		return gunum;
