@@ -9,6 +9,7 @@ public class dingdan {
 	private int state;//（订单） 状态 0表示正在处理，订单0：表示
 	private String makedealDate;//交货日期
 	private String opa;//操作人
+	
 	public String getDdanNum() {
 		return ddanNum;
 	}
@@ -57,6 +58,4 @@ public class dingdan {
 	public void setOpa(String opa) {
 		this.opa = opa;
 	}
-	
-	
 }

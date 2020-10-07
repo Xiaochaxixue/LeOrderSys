@@ -36,7 +36,7 @@
 						<th>产品图片</th>
 						<th>产品编号</th>
 						<th>固件编号</th>
-						<th>入库时间</th>
+						<th>产品名称</th>
 						<th>单位</th>
 						<th>单价</th>
 						<th>商品状态</th>
@@ -67,7 +67,7 @@
 								<td>${dingShopping.gunum}</td><!-- 固件编号 -->
 								
 								<!--  -->
-								<td>${dingShopping.ruDate}</td><!-- 入库时间 -->
+								<td>${dingShopping.cname}</td><!-- 产品名称 -->
 								
 								<!--  -->
 								<td>${dingShopping.danwei}</td><!-- 单位 -->

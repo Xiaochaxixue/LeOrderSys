@@ -72,7 +72,7 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 		 * 应的页面提示用户上传该执照扫描
 		 * 件
 		 */
-		System.out.println("=========查询是否上传了执照=========");
+		System.out.println("=========查询用户是否上传了执照=========");
 		ClientService clientService = new ClientService();
 		client Client = new client();
 		Client = clientService.findClientPictureIsExitByUid(uid);
@@ -101,52 +101,6 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			 * 还有相应的固件信息和相应的工艺说明。
 			 */
 			dingShoppings = dingShoppingService.findAllSelectedDingShoppingByUid(uid);
-			/**
-			 * dingshopping 的list遍历，找到固件信息以及工艺说明。
-			 */
-			Iterator<dingshopping> it = dingShoppings.iterator();
-			Map<String,gujian> gujianMap = new HashMap<String,gujian>();
-			Map<String,Map<String,String>> craftInfoLists = new HashMap<String,Map<String,String>>();//工艺信息,将工艺信息存储起来
-			while(it.hasNext()){
-				/**
-				 * 将与商品信息相关的固件信息，与工艺信息取出来
-				 * 并一起放入请求头里面，再在前端进行获取数据
-				 * 然后进行展示数据
-				 */
-				dingshopping dingShopping =new dingshopping();
-				dingShopping = it.next();
-				String gunum = dingShopping.getGunum();//得到固件编号，然后根据固件的编号找出固件信息以及工艺信息
-				gujian guJian = new gujian();
-				GujianService gujianService = new GujianService();
-				guJian  = gujianService.findGujianInfoByGunum(gunum);//将相应商品信息的固件信息存入到gujian类
-				gujianMap.put(gunum, guJian);//将固件信息存入到固件map中
-				
-				/*********（分割线）上面为固件相关信息，下面为工艺说明信息**********/
-				String pt = null;
-					if(dingShopping.getCtype().contains("MK")||dingShopping.getCtype().contains("mk")){
-						/**
-						 * 判断是否是模块，如果是的话提交到ShowCraftInfo类
-						 * 进行工艺说明细化，传入pt，然后进行解析，返回Map
-						 * Map<String,String>该map存的数据就是工艺的详细说明
-						 * 通过map将数据显示出来，通过键值对的形式获取该值
-						 * 如果判断不为模块，则不把它丢给ShowCraftInfo类
-						 * 而是将其赋值为null值，然后再前端判断是否为空值
-						 * 若为空值则在前端不进行处理。不进行展示。
-						 * 在展示之前就事先判断pt是否存在
-						 * 若不存在则不进行后续工艺说明的展示
-						 * 反之，亦然2020/09/29 16：10PM
-						 */
-						pt = dingShopping.getPt();//工艺说明字段
-						Map<String,String> craftInfoList = new HashMap<String,String>();
-						ShowCraftInfo ShowCraftInfo = new ShowCraftInfo();
-						craftInfoList = ShowCraftInfo.getDetailCraftInfoByPt(pt);//getDetailCraftInfoByPt得到细节的工艺说明
-						//将工艺说明信息存入到相关的的map中
-						craftInfoLists.put(pt, craftInfoList);//将相应的工艺说明map存入到Map集合中
-						//前端如何获取该值，通过el表达式嵌套获取该值
-					}
-			}
-			request.setAttribute("gujianMap",gujianMap);//将固件信息存入到请求头里面。2020/09/29 11：52PM songlj
-			request.setAttribute("craftInfoLists",craftInfoLists);//将工艺信息存入到请求头里面。2020/09/29 11：52PM songlj
 			
 			request.setAttribute("dingShoppings",dingShoppings);
 			request.setAttribute("mainRight", "/WEB-INF/jsp/ShowShoppingInfo.jsp");
@@ -185,9 +139,9 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			//得到picture参数,并将其存入dingShopping对象中
 			dingShopping.setPicture(request.getParameter("picture"));
 			//得到cnum参数，产品编号
-			dingShopping.setCnum(request.getParameter("cnum"));
+			dingShopping.setCnum(request.getParameter("cnum"));//产品编号
 			
-			dingShopping.setCname(request.getParameter("cname"));//新添加字段，产品编号
+			dingShopping.setCname(request.getParameter("cname"));//新添加字段，产品名称，显示产品的名称
 			
 			dingShopping.setCtype(request.getParameter("ctype"));
 			dingShopping.setPt(request.getParameter("pt"));
@@ -203,6 +157,17 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			//得到sstate参数，商品状态
 			dingShopping.setSstate(Integer.parseInt(request.getParameter("sstate")));
 			//得到number参数，商品数量
+			
+			//将新增的数据字段从前端获取dingShopping(request.getParameter(""));
+			dingShopping.setGuversion(request.getParameter("guversion"));
+			//排针工艺
+			dingShopping.setPinNum(request.getParameter("pinNum"));
+			dingShopping.setPinSize(request.getParameter("pinSize"));
+			dingShopping.setPinShape(request.getParameter("pinShape"));
+			dingShopping.setPinWeld(request.getParameter("pinWeld"));
+			//天线工艺
+			dingShopping.setAntennaType(request.getParameter("antennaType"));
+			dingShopping.setAntennaLength(request.getParameter("antennaLength"));
 			if(flagDingshopping !=null){
 				number = Integer.parseInt(request.getParameter("number"))+flagDingshopping.getNumber();
 				dingShopping.setNumber(Integer.parseInt(request.getParameter("number"))+flagDingshopping.getNumber());
@@ -228,13 +193,11 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 				dingShopping.setTotal(Float.parseFloat(request.getParameter("price"))*Integer.parseInt(request.getParameter("number")));
 			}
 			
-			
 			if(flagDingshopping !=null){
 				dingShoppingService.resetDingShoppingInfo(uid,cnum,number,Total);
 			}else{
 			dingShoppingService.addDingShoppingByObj(dingShopping);
 			}
-			
 			response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=cartshow");
 			
 		}else if(action.equals("cartshow")){

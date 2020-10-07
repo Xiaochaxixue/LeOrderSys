@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import bean.dingshopping;
 import utils.ConnectionFactory;
+import utils.ShowCraftInfo;
 
 public class DingShoppingDao {
 
@@ -26,7 +29,7 @@ public class DingShoppingDao {
 		try {
 			//② 准备SQL语句
 			//sql语句为多表查询sql语句
-			String sql = "SELECT gunum,s.cnum,s.cname,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND g.uid= ? ";
+			String sql = "SELECT gunum,s.cnum,s.cname,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt,guversion FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND g.uid= ? ";
 			
 			//③ 获取集装箱或者说是车
 			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -66,6 +69,23 @@ public class DingShoppingDao {
 				dingShopping.setPicture(rs.getString("picture"));
 				
 				dingShopping.setSstate(rs.getInt("sstate"));
+				//将新添加的数据库字段的数据存入
+				/**
+				 * 将固件版本，相关工艺转换然后存储
+				 */
+				dingShopping.setGuversion(rs.getString("guversion"));
+				ShowCraftInfo showCraftInfo = new ShowCraftInfo();
+				Map<String,String> craftInfoLists = new HashMap<String,String>();
+				//getDetailCraftInfoByPt
+				//工艺信息转换，然后进行存储
+				craftInfoLists = showCraftInfo.getDetailCraftInfoByPt(rs.getString("pt"));
+				dingShopping.setPinNum(craftInfoLists.get("pinNum"));//pinNum
+				dingShopping.setPinSize(craftInfoLists.get("pinSize"));//pinSize
+				dingShopping.setPinShape(craftInfoLists.get("pinShape"));//pinShape
+				dingShopping.setPinWeld(craftInfoLists.get("pinWeld"));//pinWeld
+				
+				dingShopping.setAntennaType(craftInfoLists.get("antennaType"));//antennaType
+				dingShopping.setAntennaLength(craftInfoLists.get("antennaLength"));//antennaLength
 				
 				dingShoppings.add(dingShopping);
 			}
@@ -95,10 +115,7 @@ public class DingShoppingDao {
 		ResultSet  rs = null;
 		try {
 			//② 准备SQL语句
-			//sql语句为多表查询sql语句
-			//String sql = "SELECT cnum,ruDate,danwei,price,picture,sstate,ctype,pt FROM shoppinginfo WHERE sselect=1 ";
-			/*"SELECT gunum,s.cnum,s.cname,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND g.uid= ? "*/
-			String sql = "SELECT gunum,s.cnum,s.cname,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND sselect=1 ";
+			String sql = "SELECT gunum,s.cnum,s.cname,s.ruDate,s.danwei,s.price,s.picture,s.sstate,s.ctype,pt,guversion FROM gujian g,shoppinginfo s WHERE g.cnum=s.cnum AND sselect=1 ";
 			//③ 获取集装箱或者说是车
 			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
 			//索引从1开始
@@ -142,6 +159,25 @@ public class DingShoppingDao {
 				dingShopping.setSstate(rs.getInt("sstate"));
 				System.out.println("dingShopping.setSstate:"+rs.getInt("sstate"));
 				
+				/**
+				 * 将固件版本，相关工艺转换然后存储
+				 */
+				dingShopping.setGuversion(rs.getString("guversion"));
+				ShowCraftInfo showCraftInfo = new ShowCraftInfo();
+				Map<String,String> craftInfoLists = new HashMap<String,String>();
+				//getDetailCraftInfoByPt
+				//工艺信息转换，然后进行存储
+				craftInfoLists = showCraftInfo.getDetailCraftInfoByPt(rs.getString("pt"));
+				dingShopping.setPinNum(craftInfoLists.get("pinNum"));//pinNum
+				dingShopping.setPinSize(craftInfoLists.get("pinSize"));//pinSize
+				dingShopping.setPinShape(craftInfoLists.get("pinShape"));//pinShape
+				dingShopping.setPinWeld(craftInfoLists.get("pinWeld"));//pinWeld
+				
+				dingShopping.setAntennaType(craftInfoLists.get("antennaType"));//antennaType
+				dingShopping.setAntennaLength(craftInfoLists.get("antennaLength"));//antennaLength
+				
+				
+				System.out.println("pinNum#"+craftInfoLists.get("pinNum")+"   pinSize#"+craftInfoLists.get("pinSize")+"  antennaType#"+craftInfoLists.get("antennaType"));
 				System.out.println("============================");
 				dingShoppings.add(dingShopping);
 			}
@@ -166,7 +202,7 @@ public class DingShoppingDao {
 		
 		try {
 			//② 准备SQL语句
-			String sql = "INSERT INTO dingshopping(picture,cnum,gunum,ruDate,danwei,price,sstate,number,total,ctype,pt,uid) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ";
+			String sql = "INSERT INTO dingshopping(picture,cnum,gunum,ruDate,danwei,price,sstate,number,total,ctype,pt,uid,cname) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 			//③ 获取集装箱或者说是车
 			 preparedStatement = connection.prepareStatement(sql);
 			 
@@ -183,6 +219,7 @@ public class DingShoppingDao {
 			 preparedStatement.setString(10,dingShopping.getCtype());
 			 preparedStatement.setString(11,dingShopping.getPt());
 			 preparedStatement.setString(12,dingShopping.getUid());
+			 preparedStatement.setString(13,dingShopping.getCname());//添加字段，产品名称。将产品名称也存入数据库中2020/10/06  12：01AM songlj
 			//④执行SQL
 			preparedStatement.executeUpdate();
 			System.out.println("==========数据库addDingShoppingByObj()===========");
@@ -340,7 +377,6 @@ public class DingShoppingDao {
 		Connection  connection = ConnectionFactory.getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet  rs = null;
-		
 		try {
 			//② 准备SQL语句
 			//sql语句为多表查询sql语句
