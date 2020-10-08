@@ -176,7 +176,6 @@ public class DingShoppingDao {
 				dingShopping.setAntennaType(craftInfoLists.get("antennaType"));//antennaType
 				dingShopping.setAntennaLength(craftInfoLists.get("antennaLength"));//antennaLength
 				
-				
 				System.out.println("pinNum#"+craftInfoLists.get("pinNum")+"   pinSize#"+craftInfoLists.get("pinSize")+"  antennaType#"+craftInfoLists.get("antennaType"));
 				System.out.println("============================");
 				dingShoppings.add(dingShopping);
@@ -202,7 +201,7 @@ public class DingShoppingDao {
 		
 		try {
 			//② 准备SQL语句
-			String sql = "INSERT INTO dingshopping(picture,cnum,gunum,ruDate,danwei,price,sstate,number,total,ctype,pt,uid,cname) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+			String sql = "INSERT INTO dingshopping(picture,cnum,gunum,ruDate,danwei,price,sstate,number,total,ctype,pt,uid,cname,guversion,pinNum,pinSize,pinShape,pinWeld,antennaType,antennaLength) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 			//③ 获取集装箱或者说是车
 			 preparedStatement = connection.prepareStatement(sql);
 			 
@@ -220,7 +219,16 @@ public class DingShoppingDao {
 			 preparedStatement.setString(11,dingShopping.getPt());
 			 preparedStatement.setString(12,dingShopping.getUid());
 			 preparedStatement.setString(13,dingShopping.getCname());//添加字段，产品名称。将产品名称也存入数据库中2020/10/06  12：01AM songlj
-			//④执行SQL
+			 //④执行SQL
+			 //添加固件详细信息以及相关工艺说明2020/10/08 14：15PM songlj
+			 preparedStatement.setString(14,dingShopping.getGuversion());//添加固件版本
+			 preparedStatement.setString(15,dingShopping.getPinNum());
+			 preparedStatement.setString(16,dingShopping.getPinSize());
+			 preparedStatement.setString(17,dingShopping.getPinShape());
+			 preparedStatement.setString(18,dingShopping.getPinWeld());
+			 preparedStatement.setString(19,dingShopping.getAntennaType());
+			 preparedStatement.setString(20,dingShopping.getAntennaLength());//添加工艺信息
+			 
 			preparedStatement.executeUpdate();
 			System.out.println("==========数据库addDingShoppingByObj()===========");
 		} catch (SQLException e) {
@@ -260,6 +268,15 @@ public class DingShoppingDao {
 				 * 将封装好的数据对象放入List集合中
 				 */
 				//dingShopping.setGunum(rs.getString("gunum"));
+				dingShopping.setGuversion(rs.getString("guversion"));
+				dingShopping.setPinNum(rs.getString("pinNum"));//pinNum
+				dingShopping.setPinSize(rs.getString("pinSize"));//pinSize
+				dingShopping.setPinShape(rs.getString("pinShape"));//pinShape
+				dingShopping.setPinWeld(rs.getString("pinWeld"));//pinWeld
+				
+				dingShopping.setAntennaType(rs.getString("antennaType"));//antennaType
+				dingShopping.setAntennaLength(rs.getString("antennaLength"));//antennaLength
+				
 				dingShopping.setCname(rs.getString("cname"));
 				
 				dingShopping.setCtype(rs.getString("ctype"));
@@ -269,35 +286,27 @@ public class DingShoppingDao {
 				dingShopping.setUid(rs.getString("uid"));
 				
 				dingShopping.setGunum(rs.getString("gunum"));
-				/*dingShopping.setGunum(rs.getString("gunum"));
-				System.out.println("dingShopping.setGunum:"+rs.getString("gunum"));*/
 				
 				dingShopping.setCnum(rs.getString("cnum"));
-				/*System.out.println("dingShopping.setCnum:"+rs.getString("cnum"));*/
 				
 				dingShopping.setSstate(rs.getInt("sstate"));
-				/*System.out.println("dingShopping.setSstate:"+rs.getInt("sstate"));*/
+				
 				dingShopping.setSselect(rs.getInt("sselect"));
 				
 				dingShopping.setDanwei(rs.getString("danwei"));
-				/*System.out.println("dingShopping.setDanwei:"+rs.getString("danwei"));*/
 				
 				int number = rs.getInt("number");
 				dingShopping.setNumber(number);
 				
 				float price = rs.getFloat("price");
 				dingShopping.setPrice(price);
-				/*System.out.println("dingShopping.setPrice:"+rs.getFloat("price"));*/
 				
 				dingShopping.setPicture(rs.getString("picture"));
-				/*System.out.println("dingShopping.setPicture:"+rs.getString("picture"));*/
 				
 				dingShopping.setRuDate(rs.getString("ruDate"));
-				/*System.out.println("dingShopping.setRuDate:"+rs.getString("ruDate"));*/
 				
 				dingShopping.setTotal(price*number);
 				
-				/*System.out.println("============================");*/
 				dingShoppings.add(dingShopping);
 			}
 			System.out.println("已经拿取了所有的购物车数据，dingShoppings正常进入数据库");
@@ -312,15 +321,19 @@ public class DingShoppingDao {
 		System.out.println("findAllDingShoppingInfo()正常进入数据库,但是未从表中拿到数据return null!");
 		return null;
 	}
-
-	public void setDdanNumByCnum(String ddanNum,String cnum) {
+/**
+ * 将其修改为根据商品的固件编号进行设置订单的订单编号
+ * 2020/10/08 17：49 PM songlj进行修改
+ * @param ddanNum
+ * @param cnum
+ */
+	public void setDdanNumByCnum(String ddanNum,String cnum) {//cnum参数存放的是固件编号（即gunum）
 		// TODO Auto-generated method stub
 		Connection  connection = ConnectionFactory.getConnection();
 		PreparedStatement preparedStatement =null;
-		
 		try {
 			//② 准备SQL语句
-			String sql = "UPDATE dingshopping SET ddanNum = ? WHERE ddanNum IS NULL AND cnum = ? ";
+			String sql = "UPDATE dingshopping SET ddanNum = ? WHERE ddanNum IS NULL AND gunum = ? ";
 			//③ 获取集装箱或者说是车
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, ddanNum);
@@ -371,7 +384,7 @@ public class DingShoppingDao {
 		return 0;
 	}
 
-	public dingshopping findRepeatDingShoppingInfo(String cnum, String uid) {
+	public dingshopping findRepeatDingShoppingInfo(String cnum, String uid) {//传过来的cnum里面存放的是gunum（即固件编号）
 		// TODO Auto-generated method stub
 		dingshopping dingShopping = new dingshopping();
 		Connection  connection = ConnectionFactory.getConnection();
@@ -380,7 +393,7 @@ public class DingShoppingDao {
 		try {
 			//② 准备SQL语句
 			//sql语句为多表查询sql语句
-			String sql = "SELECT * FROM dingshopping WHERE ddanNum IS NULL AND cnum=? AND uid = ?";
+			String sql = "SELECT * FROM dingshopping WHERE ddanNum IS NULL AND gunum=? AND uid = ?";
 			
 			//③ 获取集装箱或者说是车
 			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
@@ -553,7 +566,6 @@ public class DingShoppingDao {
 		// TODO Auto-generated method stub
 		Connection  connection = ConnectionFactory.getConnection();
 		PreparedStatement preparedStatement =null;
-		
 		try {
 			//② 准备SQL语句
 			String sql = "UPDATE dingshopping SET pt = ? WHERE ddanNum=? AND cnum = ? ";

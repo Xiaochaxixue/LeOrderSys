@@ -17,7 +17,7 @@
 				<thead>
 					<tr>
 						<th>产品图片</th>
-						<th>产品编号</th>
+						<th>产品信息</th>
 						<th>工艺说明</th>
 						<th>产品名称</th>
 						<th>单位</th>
@@ -56,13 +56,13 @@
 													<input type="hidden" id="gunum" name="gunum" value="${dingShopping.gunum}"/>
 												</c:if>
 												<c:if test="${flag!=null}">
+													<input type="hidden" id="gunum" name="gunum" value="${dingShopping.gunum}"/>
 													<input type="hidden" id="id" name="id" value="${flag}"/>
 												</c:if>
 											</font>
 										</p>
 									</div>
 								</td>
-								<%-- <input type="hidden" id="cnum" name="cnum" value="${dingShopping.cnum}"/> --%>
 								<input type="hidden" id="ctype" name="ctype" value="${dingShopping.ctype}"/>
 								<input type="hidden" id="cnum" name="cnum" value="${dingShopping.cnum}"/>
 								<input type="hidden" id="pt" name="pt" value="${dingShopping.pt}"/>
@@ -122,7 +122,7 @@
 										<button class="btn btn-success" type="submit">加入购物车</button>&nbsp;
 									</c:if>
 									<c:if test="${dingShopping.sstate==2}">
-										<button class="btn btn-danger" type="submit">加入购物车</button>&nbsp;
+										<button class="btn btn-info" type="submit">加入购物车</button>&nbsp;
 									</c:if>
 								</td>
 						</tr>
@@ -131,7 +131,7 @@
 				</tbody>
 			</table>
 			<div align="center">
-					<font id="error" color="red">${error}</font>
+				<font id="error" color="red">${error}</font>
 			</div>
 		</div>
 		<div align="center"><font color="red"></font></div>
