@@ -214,61 +214,42 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
 		}else if(action.equals("buy")){
 			/**
-			 * 当前端传来购买的请求
-			 * 购买商品处理
-			 * 生成订单号，对订单表dingdan进行处理
-			 */
-			/**
 			 * 对其进行重新编写，不进行一次购买多个商品，而是一个商品
 			 * 2020/10/08 17：18 PM songlj
-			 */
-			/**
 			 * action为buy，id为该商品的固件编号。
 			 * 固件编号是唯一的2020/10/08 17：33PM songlj
 			 */
-			DingDanService dingDanService = new DingDanService();
+			/**
+			 * 传入到订单意向清单购买页面的有，dingshopping信息，收货信息，发票信息
+			 * 其中dingshopping信息为单个类对象
+			 * 收货信息是包括，默认地址以及可供选择的地址。
+			 * 发票信息是包括两部分，一部分是普通发票，另一部分是专业发票信息
+			 * 此外，发票信息不是必选信息，可以在选取发票信息的选择时选择，默认是
+			 * 不需要发票的。2020/10/09 15：04 PM
+			 */
+			/*DingDanService dingDanService = new DingDanService();
 			Date systemDate = new Date();
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//当前时间年月日 时分秒
 			String strDate = format.format(systemDate);//格式化过的当前时间，字符串类型
 			String ddanNum = "LE"+RandomUtil.getOrderIdByUUId();
-			float totalprice = 0;
+			float totalprice = 0;*/
 			String gunum;//固件编号
 			gunum = id;
-			//String []Ischeckeds = request.getParameterValues("Ischecked");
-			//if(Ischeckeds!=null&&Ischeckeds.length>0){
-			//	for(int i=0;i<Ischeckeds.length;i++){
-				//	String cnum = Ischeckeds[i];
-				//	*//**
-				//	 * 将选中的商品信息的总金额拿出来
-				//	 * 将各个金额叠加，并存入订单表
-				//	 *//*
-				//	float Total = dingShoppingService.getTotalpriceByCnum(cnum);
-				//	totalprice = totalprice + Total;
-				//	System.out.println("Total"+i+":"+Total);
-				//	System.out.println("totalprice"+i+":"+totalprice);
-				//	dingShoppingService.setDdanNumByCnum(ddanNum,cnum);//将唯一的订单号存入到dingdan表里面，通过产品编号
-				//}
-				float Total = dingShoppingService.getTotalpriceByCnum(gunum);
-				dingShoppingService.setDdanNumByCnum(ddanNum,gunum);//将唯一的订单号存入到dingdan表里面，通过产品编号
-																											//修改为根据固件编号进行修改
-				dingdan dingDan = new dingdan();
-				/**
-				 * 将订单信息存为对象，dingDan对象
-				 */
-				dingDan.setDdanNum(ddanNum);
-				dingDan.setUid(uid);
-				dingDan.setDealDate(strDate);
-				dingDan.setTotalprice(Total);
-				dingDan.setState(0);//初始时，订单客户这边设置为0
-				dingDanService.addDingDanInfoByObj(dingDan);
-				response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=showDingdan");
-			/*}else {
-				*//**
-				 * 当未勾选任何要购买的商品时，给出提示信息并且返回到开始页面状态
-				 *//*
-				request.getSession().setAttribute("error","请先勾选商品，再进行购买！");
-				response.sendRedirect(getServletContext().getContextPath()+"/ShowShoppingInfoServlet?action=cartshow");
-			}*/
+			/**
+			 * 将dingshopping信息等信息从数据库
+			 * 中拿出来然后存入到请求头里面，在订单意向
+			 * 购买清单显示。
+			 * 		①拿取dingshopping信息
+			 * 		②拿取收货地址信息
+			 * 		③拿取发票信息
+			 * 最后存入请求头里面
+			 */
+			dingshopping dingShopping = new dingshopping();
+			dingShopping = dingShoppingService.findDingShoppingInfoByGunnumAndUid(gunum,uid);//根据固件编号拿取dingshopping信息
+			System.out.println(dingShopping.toString());
+			request.setAttribute("dingShopping", dingShopping);
+			request.setAttribute("mainRight", "/WEB-INF/jsp/proBuy.jsp");
+			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
 		}else if(action.equals("showDingdan")){
 			List<dingdan> dingDans = new ArrayList<dingdan>();
 			DingDanService dingDanService = new DingDanService();

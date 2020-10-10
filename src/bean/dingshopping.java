@@ -24,7 +24,6 @@ public class dingshopping {
 	private int pnum;//排针数量，需求更改该字段可能不用
 	
 	private float total;//该字段为订单商品表的总金额
-	
 	/**
 	 * ①将固件信息也简单的存入
 	 * ②将工艺信息也存入
@@ -43,12 +42,13 @@ public class dingshopping {
 	
 	@Override
 	public String toString() {
-		return "dingshopping [ddanNum=" + ddanNum + ", uid=" + uid + ", gunum=" + gunum + ", cnum=" + cnum
-				+ ", sselect=" + sselect + ", sstate=" + sstate + ", danwei=" + danwei + ", number=" + number
-				+ ", price=" + price + ", picture=" + picture + ", ruDate=" + ruDate + ", tiantype=" + tiantype
-				+ ", pt=" + pt + ", pnum=" + pnum + ", total=" + total + "]";
+		return "dingshopping [ddanNum=" + ddanNum + ", uid=" + uid + ", gunum=" + gunum + ", cnum=" + cnum + ", cname="
+				+ cname + ", sselect=" + sselect + ", sstate=" + sstate + ", ctype=" + ctype + ", danwei=" + danwei
+				+ ", number=" + number + ", price=" + price + ", picture=" + picture + ", ruDate=" + ruDate
+				+ ", tiantype=" + tiantype + ", pt=" + pt + ", pnum=" + pnum + ", total=" + total + ", guversion="
+				+ guversion + ", pinNum=" + pinNum + ", pinSize=" + pinSize + ", pinShape=" + pinShape + ", pinWeld="
+				+ pinWeld + ", antennaType=" + antennaType + ", antennaLength=" + antennaLength + "]";
 	}
-	
 	public String getDdanNum() {
 		return ddanNum;
 	}
@@ -151,7 +151,6 @@ public class dingshopping {
 	public void setCname(String cname) {
 		this.cname = cname;
 	}
-
 
 	public String getGuversion() {
 		return guversion;

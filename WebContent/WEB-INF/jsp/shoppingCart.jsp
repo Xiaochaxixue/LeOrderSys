@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <script type="text/javascript">
-
 	$(document).ready(function(){
 		var tip="${sessionScope.error}";
 		toastr.options = {"closeButton": true,
@@ -106,7 +105,7 @@
 								<td>${dingShopping.number}</td><!-- 数量 -->
 								<td>${dingShopping.total}</td><!-- 总金额 -->
 								<td>
-									<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='ShowShoppingInfoServlet?action=buy&id={dingShopping.gunum}'">购买</button>
+									<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='ShowShoppingInfoServlet?action=buy&id=${dingShopping.gunum}'">购买</button>
 								</td>
 							</tr>
 						</c:forEach>

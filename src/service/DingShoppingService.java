@@ -81,4 +81,12 @@ public class DingShoppingService {
 		dingShoppingDao.modifyPtByObj(dingShopping);
 	}
 
+	public dingshopping findDingShoppingInfoByGunnumAndUid(String gunum, String uid) {
+		// TODO Auto-generated method stub
+		DingShoppingDao dingShoppingDao = new DingShoppingDao();
+		dingshopping dingShopping = new dingshopping();
+		dingShopping = dingShoppingDao.findDingShoppingInfoByGunnumAndUid(gunum,uid);
+		return dingShopping;
+	}
+
 }

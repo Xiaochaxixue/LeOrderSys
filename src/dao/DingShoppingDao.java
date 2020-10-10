@@ -37,7 +37,6 @@ public class DingShoppingDao {
 			preparedStatement.setString(1, uid);
 			//④执行SQL,获取执行后的结果,查询的结果封装在ResultSet
 			rs = preparedStatement.executeQuery();
-			
 			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
 			//如有数据，就进入循环体，封装该行数据
 			while (rs.next()) {
@@ -49,7 +48,7 @@ public class DingShoppingDao {
 				 */
 				/**
 				 * 将ctype，pt添加到list集合中
-				 * 新添需求2020/09/07 15：47
+				 * 新添需求2020/09/07 15：47PM
 				 */
 				dingShopping.setCtype(rs.getString("ctype"));
 				dingShopping.setPt(rs.getString("pt"));
@@ -583,5 +582,69 @@ public class DingShoppingDao {
 		}finally {
 			ConnectionFactory.close(connection, preparedStatement, null);
 		}
+	}
+
+	public dingshopping findDingShoppingInfoByGunnumAndUid(String gunum, String uid) {
+		// TODO Auto-generated method stub
+		dingshopping dingShopping = new dingshopping();
+		Connection  connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet  rs = null;
+		try {
+			//② 准备SQL语句
+			//sql语句为多表查询sql语句
+			String sql = "SELECT * FROM dingshopping WHERE ddanNum IS NULL AND gunum=? AND uid = ?";
+			//③ 获取集装箱或者说是车
+			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			//索引从1开始
+			preparedStatement.setString(1, gunum);
+			preparedStatement.setString(2, uid);
+			//④执行SQL,获取执行后的结果,查询的结果封装在ResultSet
+			rs = preparedStatement.executeQuery();
+			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
+			//如有数据，就进入循环体，封装该行数据
+			while (rs.next()) {
+				/**
+				 * rs结果集的相关操作
+				 * 将rs结果集中的数据存入到dingShopping对象中
+				 * 将封装好的数据对象放入List集合中
+				 */
+				//guversion    rs.getString("")
+				dingShopping.setUid(rs.getString("uid"));//uid
+				dingShopping.setGunum(rs.getString("gunum"));//gunum
+				dingShopping.setCnum(rs.getString("cnum"));
+				dingShopping.setCname(rs.getString("cname"));//cname
+				dingShopping.setSselect(rs.getInt("sselect"));//sselect
+				dingShopping.setSstate(rs.getInt("sstate"));
+				dingShopping.setCtype(rs.getString("ctype"));
+				dingShopping.setDanwei(rs.getString("danwei"));
+				dingShopping.setNumber(rs.getInt("number"));
+				dingShopping.setPrice(rs.getFloat("price"));
+				dingShopping.setPicture(rs.getString("picture"));//picture
+				dingShopping.setRuDate(rs.getString("ruDate"));
+				dingShopping.setPt(rs.getString("pt"));
+				dingShopping.setTotal(rs.getFloat("total"));
+				/***************分割线，下面的是新添加字段*******************/
+				dingShopping.setGuversion(rs.getString("guversion"));//guversion    rs.getString("")
+				dingShopping.setPinNum(rs.getString("pinNum"));//pinNum
+				dingShopping.setPinSize(rs.getString("pinSize"));//pinSize
+				dingShopping.setPinShape(rs.getString("pinShape"));//pinShape
+				dingShopping.setPinWeld(rs.getString("pinWeld"));//pinWeld
+				dingShopping.setAntennaType(rs.getString("antennaType"));//antennaType
+				dingShopping.setAntennaLength(rs.getString("antennaLength"));//antennaLength
+				System.out.println("============查找dingshopping信息ByGunumAndUid================");
+				return dingShopping;
+			}
+			/*System.out.println("已经拿取了所有的可选的订单商品数据，dingShoppings正常进入数据库");
+			return dingShopping;*/
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			//System.out.println("findAllClientInfo()1未正常进入数据库进行查询");
+			ConnectionFactory.close(connection, preparedStatement, rs);
+		}
+		System.out.println("findRepeatDingShoppingInfo()正常进入数据库,但是未从表中拿到数据return null!");
+		return null;
 	}
 }

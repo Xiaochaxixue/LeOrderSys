@@ -16,13 +16,13 @@ public class ShowCraftInfo {
 	 * @param pt
 	 * @return
 	 */
-	String pinNum="";//排针数量
-	String pinSize="";//排针大小
-	String pinShape="";//排针形状
-	String pinWeld="";//焊接方式
+	String pinNum="无";//排针数量
+	String pinSize="无";//排针大小
+	String pinShape="无";//排针形状
+	String pinWeld="无";//焊接方式
 	
-	String antennaType="";//天线类型
-	String antennaLength="";//天线长度
+	String antennaType="无";//天线类型
+	String antennaLength="无";//天线长度
 	
 	Map<String,String> craftInfoLists = new HashMap<String,String>();
 	public Map<String,String> getDetailCraftInfoByPt(String pt){
@@ -57,11 +57,17 @@ public class ShowCraftInfo {
 				 * 有排针工艺没有天线工艺
 				 */
 				handlePin(pt);
+				craftInfoLists.put("antennaType", antennaType);
+				craftInfoLists.put("antennaLength", antennaLength);
 			}else if(!pt.contains("P")&&(pt.contains("B")||pt.contains("C")||pt.contains("I"))){
 				/**
 				 * 有天线工艺没有排针工艺
 				 */
 				handlePin(pt);
+				craftInfoLists.put("pinNum", pinNum);
+				craftInfoLists.put("pinSize", pinSize);
+				craftInfoLists.put("pinShape", pinShape);
+				craftInfoLists.put("pinWeld", pinWeld);
 			}
 		}else{
 			craftInfoLists.put("pinNum", pinNum);
