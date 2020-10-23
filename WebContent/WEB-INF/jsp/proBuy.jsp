@@ -17,13 +17,16 @@
 	$(document).ready(function(){
 		$("#shoppingCart").addClass("active");
 	});
+	function shows(a) {
+        $('.buttonText').text(a)
+    }
 </script>
 <div class="data_list">
 		<div class="data_list_title">
 			采购清单
 		</div>
 		<div><!-- 购买意向清单主体div -->
-			<table class="table table-striped table-bordered table-hover datatable">
+			<table class="table table-striped table-bordered table-hover datatable" style="width:1300px" align="center">
 				<thead>
 					<tr>
 						<th>购买产品信息</th>
@@ -44,7 +47,7 @@
 					<tr>
 						<td colspan="4">
 						<div>
-						<p>产品信息</p>
+						<p>产品信息:</p>
 							<p></p><!-- 产品名称 -->
 							<p></p><!-- 固件信息 -->
 						</div>
@@ -71,11 +74,64 @@
 							</div>
 						</td>
 					</tr><!-- 产品的工艺信息 -->
-					<tr></tr><!-- 收货信息和发票信息 -->
 					<tr>
-						<!-- <td> -->
-						<button class="btn btn-success" type="submit" style="margin-right: 50px;">购买</button>
-						<!-- </td> -->
+						<td colspan="4"><!-- 展示收货地址信息 -->
+						<div>
+							<div style="float:left;">
+									<div style="float:left;">收货信息：</div>
+									<div class="btn-group" style="float:left;">
+									    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									        <span class="buttonText">收货人：${Client.contact}&nbsp;&nbsp;&nbsp;&nbsp;联系方式：${Client.phone}
+									        		&nbsp;&nbsp;&nbsp;&nbsp;收货地址：${Client.address0}<font size="2" color="grey">(默认地址)</font></span>
+									        <span class="caret"><p><font size="1" color="grey">修改</font></p></span><!--  -->
+									    </button>
+									    <ul class="dropdown-menu" role="menu"><!-- 根据servlet传过来的list数据表，循环将数据展示在前端 -->
+									    	<li><!-- 默认的收货信息 -->
+									        	<a href="#" onclick="shows($(this).text())">
+									        		<p>收货人：${Client.contact}&nbsp;&nbsp;&nbsp;&nbsp;联系方式：${Client.phone}</p>
+									        		<p>收货地址：${Client.address0}<font size="2" color="grey">(默认地址)</font></p>
+									        	</a>
+									        </li>
+									        <c:forEach items="${Tb_addresses}"  var="Tb_address" varStatus="stat">
+										        <li>
+										        	<a href="#" onclick="shows($(this).text())">
+										        		<p>收货人：${Tb_address.acceptor}&nbsp;&nbsp;&nbsp;&nbsp;联系方式：${Tb_address.tel}</p>
+										        		<p>收货地址：${Tb_address.address}</p>
+										        	</a>
+										        </li>
+									        </c:forEach>
+									    </ul>
+									</div>
+								</div>
+								<div style="float:left;margin-left:100px;">
+									<div>
+										发票信息：
+									</div><!-- 展示发票信息 -->
+									<div><!-- 选择是否需要发票信息，要的话要专用还是普通发票 -->
+										<label class="radio-inline" style="float:left;">
+											<input type="radio" name="optionsRadiosinline" id="optionsRadios0" value="option1" checked> &nbsp;&nbsp;不需要
+										</label>
+										<label class="radio-inline" style="float:left;">
+											<input type="radio" name="optionsRadiosinline" id="optionsRadios1"  value="option2"> &nbsp;&nbsp;普通发票
+										</label>
+										<label class="radio-inline" style="float:left;">
+											<input type="radio" name="optionsRadiosinline" id="optionsRadios2"  value="option2">&nbsp;&nbsp;专用发票
+										</label>
+									</div>	
+									<div><!-- 当点击普通发票或者专用发票单选框时展示出发票详情div -->
+										<!-- 发票详情： -->
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr><!-- 收货信息和发票信息 -->
+					<tr>
+						<td colspan="4">
+							<div align="right">
+								<button class="btn btn-primary" type="button" onclick="javascript:history.back()">返回</button>&nbsp;
+								<button class="btn btn-success" type="submit" style="margin-right: 50px;">购买</button>
+							</div>
+						</td>
 					</tr><!-- 提交订单等操作 -->
 				</tbody>
 			</table>

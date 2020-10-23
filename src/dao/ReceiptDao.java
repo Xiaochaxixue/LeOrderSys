@@ -185,4 +185,88 @@ public class ReceiptDao {
 			ConnectionFactory.close(connection, preparedStatement, null);
 		}
 	}
+	
+
+	public List<receipt> findReceiptPInfoByUid(String uid) {
+		// TODO Auto-generated method stub
+		List<receipt> receipts = new ArrayList<receipt>();
+		Connection  connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet  rs = null;
+		//② 准备SQL语句
+		try {
+			String sql = "select * from receipt where bank is null and uid=?";
+			//③ 获取集装箱或者说是车
+			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			//索引从1开始
+			 preparedStatement.setString(1, uid);
+			//④执行SQL,获取执行后的结果,查询的结果封装在ResultSet
+			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
+			//如有数据，就进入循环体，封装该行数据
+			rs = preparedStatement.executeQuery();
+			while(rs.next()){
+				receipt Receipt = new receipt();
+				Receipt.setUid(rs.getString("uid"));
+				//Receipt.setDdanNum(rs.getString("registecall"));
+				Receipt.setTitle(rs.getString("title"));
+				Receipt.setTax(rs.getString("tax"));
+				Receipt.setBank(rs.getString("bank"));
+				Receipt.setBanknumber(rs.getString("banknumber"));
+				Receipt.setRegisteadd(rs.getString("registeadd"));
+				Receipt.setRegistecall(rs.getString("registecall"));
+				receipts.add(Receipt);
+			}
+			System.out.println("findReceiptPInfoByUid()发票管理成功拿取所有的发票，并没有发生错误");
+			return receipts;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			ConnectionFactory.close(connection, preparedStatement, rs);
+		}
+		System.out.println("findReceiptPInfoByUid()成功进入数据库，但没有拿到相应的数据，返回null值");
+		return null;
+	}
+	
+	public List<receipt> findReceiptQInfoByUid(String uid) {
+		// TODO Auto-generated method stub
+		List<receipt> receipts = new ArrayList<receipt>();
+		Connection  connection = ConnectionFactory.getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet  rs = null;
+		//② 准备SQL语句
+		try {
+			String sql = "select * from receipt where bank is not null and uid=?";
+			//③ 获取集装箱或者说是车
+			 preparedStatement = (PreparedStatement) connection.prepareStatement(sql);
+			//索引从1开始
+			 preparedStatement.setString(1, uid);
+			//④执行SQL,获取执行后的结果,查询的结果封装在ResultSet
+			//因为查询出来的结果包括表头信息，所以要指针下移一行，看是否有查询出来的数据
+			//如有数据，就进入循环体，封装该行数据
+			rs = preparedStatement.executeQuery();
+			while(rs.next()){
+				receipt Receipt = new receipt();
+				Receipt.setUid(rs.getString("uid"));
+				//Receipt.setDdanNum(rs.getString("registecall"));
+				Receipt.setTitle(rs.getString("title"));
+				Receipt.setTax(rs.getString("tax"));
+				Receipt.setBank(rs.getString("bank"));
+				Receipt.setBanknumber(rs.getString("banknumber"));
+				Receipt.setRegisteadd(rs.getString("registeadd"));
+				Receipt.setRegistecall(rs.getString("registecall"));
+				receipts.add(Receipt);
+			}
+			System.out.println("findReceiptQInfoByUid()发票管理成功拿取所有的发票，并没有发生错误");
+			return receipts;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			ConnectionFactory.close(connection, preparedStatement, rs);
+		}
+		System.out.println("findReceiptQInfoByUid()成功进入数据库，但没有拿到相应的数据，返回null值");
+		return null;
+	}
+	
 }

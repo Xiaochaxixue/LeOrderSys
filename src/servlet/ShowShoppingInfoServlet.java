@@ -20,13 +20,17 @@ import bean.client;
 import bean.dingdan;
 import bean.dingshopping;
 import bean.gujian;
+import bean.receipt;
 import bean.shoppinginfo;
+import bean.tb_address;
 import bean.user;
 import service.ClientService;
 import service.DingDanService;
 import service.DingShoppingService;
 import service.GujianService;
+import service.ReceiptService;
 import service.ShoppingInfoService;
+import service.Tb_addressService;
 import utils.RandomUtil;
 import utils.ShowCraftInfo;
 
@@ -71,8 +75,8 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 		 * 件
 		 */
 		System.out.println("=========查询用户是否上传了执照=========");
-		ClientService clientService = new ClientService();
-		client Client = new client();
+		ClientService clientService = new ClientService();//客户的服务层
+		client Client = new client();//客户对象
 		Client = clientService.findClientPictureIsExitByUid(uid);
 		if(User.getType()==1&&(Client==null||Client.getPicture()==null||Client.getPicture().isEmpty())){
 			/**
@@ -221,8 +225,8 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			 */
 			/**
 			 * 传入到订单意向清单购买页面的有，dingshopping信息，收货信息，发票信息
-			 * 其中dingshopping信息为单个类对象
-			 * 收货信息是包括，默认地址以及可供选择的地址。
+			 * 其中dingshoppin是g信息为单个类对象
+			 * 收货信息包括，默认地址以及可供选择的地址。
 			 * 发票信息是包括两部分，一部分是普通发票，另一部分是专业发票信息
 			 * 此外，发票信息不是必选信息，可以在选取发票信息的选择时选择，默认是
 			 * 不需要发票的。2020/10/09 15：04 PM
@@ -235,18 +239,37 @@ public class ShowShoppingInfoServlet extends HttpServlet {
 			float totalprice = 0;*/
 			String gunum;//固件编号
 			gunum = id;
-			/**
-			 * 将dingshopping信息等信息从数据库
-			 * 中拿出来然后存入到请求头里面，在订单意向
-			 * 购买清单显示。
-			 * 		①拿取dingshopping信息
-			 * 		②拿取收货地址信息
-			 * 		③拿取发票信息
-			 * 最后存入请求头里面
-			 */
+			
 			dingshopping dingShopping = new dingshopping();
 			dingShopping = dingShoppingService.findDingShoppingInfoByGunnumAndUid(gunum,uid);//根据固件编号拿取dingshopping信息
-			System.out.println(dingShopping.toString());
+			/**
+			 * 查找收货信息以及发票信息
+			 * 然后将该两种信息存入到请求头里面
+			 * 然后方便前端展示
+			 * ①查找收货地址信息，一部分是默认地址，另一部分是非默认地址信息
+			 * ②查找发票信息，发票信息分为两部分，一是专用发票，二是普通发票信息。
+			 * 然后将两种信息存入到请求头里面。
+			 */
+			List<tb_address> Tb_addresses = new ArrayList<tb_address>();//存放非默认地址信息
+			Client = clientService.findClientInfoByUid(uid);//获取包含默认地址的客户信息
+			request.setAttribute("Client", Client);//将客户信息存入到请求头里面
+			
+			Tb_addressService tb_addressService = new Tb_addressService();
+			Tb_addresses = tb_addressService.findAllAddressInfoByUid(uid);
+			request.setAttribute("Tb_addresses", Tb_addresses);//将非默认地址存入到请求头里面
+			
+			/**
+			 * 获取用户的发票信息，发票分为两种一种为专用发票，一种为普通发票。
+			 */
+			//receipt
+			List<receipt> ReceiptP = new ArrayList<receipt>();//存放普通发票
+			List<receipt> ReceiptQ = new ArrayList<receipt>();//存放专用发票。
+			ReceiptService receiptService = new ReceiptService();//发票服务类
+			ReceiptP = receiptService.findReceiptPInfoByUid(uid);//获得普通发票的信息list
+			ReceiptQ = receiptService.findReceiptQInfoByUid(uid);//获得专用发票的信息List
+			request.setAttribute("ReceiptP", ReceiptP);//将两种发票信息存放到请求头里面
+			request.setAttribute("ReceiptQ", ReceiptQ);//将专用发票信息存入请求头里面
+			
 			request.setAttribute("dingShopping", dingShopping);
 			request.setAttribute("mainRight", "/WEB-INF/jsp/proBuy.jsp");
 			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);

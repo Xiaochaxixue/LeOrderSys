@@ -46,4 +46,20 @@ public class ReceiptService {
 		receiptDao.addReceiptInfoByObjPlus(receipt);
 	}
 
+	public List<receipt> findReceiptPInfoByUid(String uid) {
+		// TODO Auto-generated method stub
+		List<receipt> receipts = new ArrayList<receipt>();
+		ReceiptDao receiptDao = new ReceiptDao();
+		receipts = receiptDao.findReceiptPInfoByUid(uid);
+		return receipts;
+	}
+
+	public List<receipt> findReceiptQInfoByUid(String uid) {
+		// TODO Auto-generated method stub
+		List<receipt> receipts = new ArrayList<receipt>();
+		ReceiptDao receiptDao = new ReceiptDao();
+		receipts = receiptDao.findReceiptQInfoByUid(uid);
+		return receipts;
+	}
+
 }

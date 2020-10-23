@@ -32,7 +32,6 @@
 				<button class="btn btn-success" type="button" style="margin-right: 50px;" data-toggle="modal" data-target="#myModal">新增地址</button>
 		<div>
 			<div class="data_form" >
-			
 				<table class="table  table-bordered table-hover datatable"  style="width:1500px" align="center">
 				<thead>
 					<tr>

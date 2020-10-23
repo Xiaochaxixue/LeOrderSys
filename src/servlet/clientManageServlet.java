@@ -48,7 +48,6 @@ public class clientManageServlet extends HttpServlet {
 		ClientService clientService=new ClientService();
 		clients=clientService.findAllClientInfo();//得到了所有客户信息
 		if(action.equals("list")){
-			
 			//request.setAttribute("id", id);
 			//System.out.println("list "+"id:"+id+" action:"+action);
 			request.setAttribute("clients", clients);//将客户信息存入请求头里面

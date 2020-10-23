@@ -112,5 +112,19 @@ public class Info {
 	 * dingshopping数据库dao层添加findDingShoppingInfoByGunnumAndUid方法，
 	 * 该方法返回dingshopping实例对象，传入固件编码与uid
 	 */
+	/**
+	 * 被安排的明明白白
+	 * 2020/10/10 17：06PM
+	 */
+	/**
+	 * 2020/10/12 9：09AM songlj
+	 * 购买意向清单页面收货信息和发票信息的完善，以及进行后面
+	 * 的servlet的处理业务流程需要编写。即进行提交购物意向清单
+	 * 后servlet要进行的业务操作。
+	 */
+	/**
+	 * 关于使用servlet实现高并发，使用jedis
+	 * 2020/10/13 16：01 PM
+	 */
 }
 
